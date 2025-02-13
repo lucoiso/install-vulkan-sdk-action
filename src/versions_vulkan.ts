@@ -160,15 +160,14 @@ export async function resolveVersion(version: string): Promise<string> {
  *
  * @export
  * @param {string} version - The current version.
+ * @param {AvailableVersions} allVersions - The list of all available versions.
  * @return {*}  {Promise<string>} The next lower version.
  */
-export async function getLowerVersion(version: string): Promise<string> {
-  const availableVersions = await getAvailableVersions()
-  if (!availableVersions || !availableVersions.versions || availableVersions.versions.length === 0) {
+export async function getLowerVersion(version: string, allVersions:AvailableVersions): Promise<string> {
+  if (allVersions === null || allVersions.versions.length === 0) {
     throw new Error('No available versions found')
   }
-
-  const sortedVersions = availableVersions.versions.sort((a, b) => versions.compare(b, a))
+  const sortedVersions = allVersions.versions.sort((a, b) => versions.compare(b, a))
 
   // Find the index of the given version
   const index = sortedVersions.indexOf(version)
