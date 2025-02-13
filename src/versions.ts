@@ -11,16 +11,16 @@
  * @returns {number} Returns -1 if ver1 is less than ver2, 1 if ver1 is greater than ver2, or 0 if they are equal.
  */
 export function compare(v1: string, v2: string): number {
-  // remove dots and handle strings as integers
-  const intV1 = Number.parseInt(v1.replace(/\./g, ''))
-  const intV2 = Number.parseInt(v2.replace(/\./g, ''))
+  const parts1 = v1.split('.').map(Number)
+  const parts2 = v2.split('.').map(Number)
 
-  // compare the integers
-  if (intV1 < intV2) {
-    return -1
-  } else if (intV1 > intV2) {
-    return 1
-  } else {
-    return 0
+  for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+    const num1 = parts1[i] ?? 0 // Default missing segments to 0
+    const num2 = parts2[i] ?? 0
+
+    if (num1 < num2) return -1
+    if (num1 > num2) return 1
   }
+
+  return 0
 }

@@ -6,6 +6,7 @@
 import * as core from '@actions/core'
 import * as http from './http'
 import * as platform from './platform'
+import * as versions from './versions'
 
 // Vulkan SDK Version Query and Download API
 // https://vulkan.lunarg.com/content/view/latest-sdk-version-api
@@ -162,16 +163,26 @@ export async function resolveVersion(version: string): Promise<string> {
  * @return {*}  {Promise<string>} The next lower version.
  */
 export async function getLowerVersion(version: string): Promise<string> {
-  const available = await getAvailableVersions()
-  if (!available || !available.versions || available.versions.length === 0) {
+  const availableVersions = await getAvailableVersions()
+  if (!availableVersions || !availableVersions.versions || availableVersions.versions.length === 0) {
+    throw new Error('No available versions found')
+  }
+
+  const sortedVersions = availableVersions.versions.sort((a, b) => versions.compare(b, a))
+
+  // Find the index of the given version
+  const index = sortedVersions.indexOf(version)
+
+  // If version not found, return the current version
+  if (index === -1) {
     return version
   }
-  // Find the index of the current version.
-  const index = available.versions.indexOf(version)
-  if (index === -1 || index === available.versions.length - 1) {
-    // Version not found or is already the lowest available.
+
+  // If it's the last version in the sorted array (lowest version), return it
+  if (index === sortedVersions.length - 1) {
     return version
   }
-  // Return the next lower version.
-  return available.versions[index + 1]
+
+  // Return the next lower version in the array
+  return sortedVersions[index + 1]
 }

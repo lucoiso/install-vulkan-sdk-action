@@ -1,6 +1,6 @@
 {
   "name": "install-vulkan-sdk-action",
-  "version": "1.0.6",
+  "version": "1.1.1",
   "private": true,
   "description": "A Github Action installing the Vulkan SDK and Runtime.",
   "author": "Jens A. Koch",
@@ -13,7 +13,7 @@
     "lint:check": "npx @biomejs/biome lint",
     "lint:fix": "npx @biomejs/biome lint --write",
     "package": "ncc build --source-map --minify",
-    "test": "jest --verbose --detectOpenHandles --runInBand",
+    "test": "jest --no-cache --verbose --detectOpenHandles --runInBand",
     "test:cov": "jest --verbose --coverage",
     "npm:audit": "npm audit --audit-level=high fix",
     "npm:outdated": "npm outdated",
