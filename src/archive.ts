@@ -13,7 +13,7 @@ import * as platform from './platform'
  * @param {string} destination - The destination directory where the archive contents will be extracted.
  * @return {*}  {Promise<string>} A Promise that resolves to the destination directory path after extraction.
  */
-async function extract(file: string, destination: string): Promise<string> {
+export async function extract(file: string, destination: string): Promise<string> {
   const flags: string[] = []
 
   let extract: (

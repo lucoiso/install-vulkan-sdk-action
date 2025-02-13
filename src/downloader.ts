@@ -89,31 +89,31 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
  * @return {*}  {Promise<string>} Returns the download url.
  */
 export async function getUrlVulkanRuntime(version: string): Promise<string> {
-  let currentVersion = version;
-  const platformName = platform.getPlatform();
+  let currentVersion = version
+  const platformName = platform.getPlatform()
 
   for (let attempt = 1; attempt <= 3; attempt++) {
-    const vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/vulkan-runtime-components.zip`;
+    const vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/vulkan-runtime-components.zip`
     try {
-      await http.isDownloadable('VULKAN_RUNTIME', currentVersion, vulkanRuntimeUrl);
-      return vulkanRuntimeUrl;
+      await http.isDownloadable('VULKAN_RUNTIME', currentVersion, vulkanRuntimeUrl)
+      return vulkanRuntimeUrl
     } catch (error) {
-      core.info(`Attempt ${attempt}: Vulkan runtime for version ${currentVersion} is not downloadable.`);
+      core.info(`Attempt ${attempt}: Vulkan runtime for version ${currentVersion} is not downloadable.`)
       if (attempt < 3) {
-        const lowerVersion = await versionsVulkan.getLowerVersion(currentVersion);
+        const lowerVersion = await versionsVulkan.getLowerVersion(currentVersion)
         if (lowerVersion === currentVersion) {
           // If lowering the version has no effect, break out.
-          break;
+          break
         }
-        currentVersion = lowerVersion;
-        core.info(`Trying lower version ${currentVersion}...`);
+        currentVersion = lowerVersion
+        core.info(`Trying lower version ${currentVersion}...`)
       } else {
-        throw new Error(`Vulkan runtime is not downloadable after ${attempt} attempts.`);
+        throw new Error(`Vulkan runtime is not downloadable after ${attempt} attempts.`)
       }
     }
   }
 
-  throw new Error('Failed to find a downloadable Vulkan runtime version after 3 attempts.');
+  throw new Error('Failed to find a downloadable Vulkan runtime version after 3 attempts.')
 }
 
 /**

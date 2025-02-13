@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as core from '@actions/core'
-import * as tc from '@actions/tool-cache'
 import { execSync } from 'node:child_process'
 import * as fs from 'node:fs'
 import * as path from 'node:path'

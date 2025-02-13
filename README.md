@@ -156,6 +156,11 @@ The following environment variables are set:
 | `LD_LIBRARY_PATH`   | String  | Linux only: path to vulkan library  |
 | `DYLD_LIBRARY_PATH` | String  | Mac only: path to vulkan library  |
 
+## Features
+
+- Installs SDK
+- Installs Runtime using automatic download retry and version lowering
+
 ## License
 
 All the content in this repository is licensed under the [MIT License](https://github.com/jakoch/install-vulkan-sdk-action/blob/main/LICENSE).
