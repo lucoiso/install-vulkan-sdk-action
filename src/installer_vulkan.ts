@@ -9,6 +9,7 @@ import { execSync } from 'node:child_process'
 import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as platform from './platform'
+import * as archive from './archive'
 
 /**
  * Install the Vulkan SDK.
@@ -68,7 +69,7 @@ export async function installVulkanSdkLinux(
   destination: string,
   optionalComponents: string[]
 ): Promise<string> {
-  const installPath = await extractArchive(sdkPath, destination)
+  const installPath = await archive.extract(sdkPath, destination)
 
   return installPath
 }
@@ -160,7 +161,7 @@ export async function installVulkanSdkMacZip(
 ): Promise<string> {
   // vulkan sdk is packaged as a .zip since version 1.3.296.0
   // extract the zip archive to /tmp
-  await extractArchive(sdkPath, platform.TEMP_DIR)
+  await archive.extract(sdkPath, platform.TEMP_DIR)
 
   // The full CLI command looks like:
   // sudo ./InstallVulkan.app/Contents/MacOS/InstallVulkan --root "installation path" --accept-licenses --default-answer --confirm-command install
@@ -278,7 +279,7 @@ export async function installVulkanRuntime(runtimePath: string, destination: str
   core.info(`📦 Extracting Vulkan Runtime (➔ vulkan-1.dll) ...`)
   // install into temp
   const tempInstallPath = path.normalize(`${platform.TEMP_DIR}/vulkan-runtime`) // C:\Users\RUNNER~1\AppData\Local\Temp\vulkan-runtime
-  await extractArchive(runtimePath, tempInstallPath)
+  await archive.extract(runtimePath, tempInstallPath)
   await wait(3000) // wait/block for 3sec for files to arrive. ugly hack.
   // copy from temp to destination
   const topLevelFolder = fs.readdirSync(tempInstallPath)[0] // VulkanRT-1.3.250.1-Components
@@ -288,58 +289,6 @@ export async function installVulkanRuntime(runtimePath: string, destination: str
   fs.rmSync(tempInstallPath, { recursive: true })
   core.info(`   Installed into folder: ${installPath}`)
   return installPath
-}
-
-/**
- * Extracts an archive file to a specified destination based on the platform and file type.
- *
- * @param {string} file - The path to the archive file to be extracted.
- * @param {string} destination - The destination directory where the archive contents will be extracted.
- * @return {*}  {Promise<string>} A Promise that resolves to the destination directory path after extraction.
- */
-async function extractArchive(file: string, destination: string): Promise<string> {
-  const flags: string[] = []
-
-  let extract: (
-    file: string,
-    destination: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    flags: string[]
-  ) => Promise<string> = (file, destination, flags) => {
-    throw new Error('Extraction function is not properly assigned.')
-  }
-
-  if (platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) {
-    if (file.endsWith('.exe')) {
-      // No extraction needed for .exe files
-      return destination
-    } else if (file.endsWith('.zip')) {
-      extract = (file, destination) => tc.extractZip(file, destination)
-    } else if (file.endsWith('.7z')) {
-      extract = (file, destination) => tc.extract7z(file, destination)
-    }
-  } else if (platform.IS_MAC) {
-    if (file.endsWith('.zip')) {
-      extract = (file, destination) => tc.extractZip(file, destination)
-    } else if (file.endsWith('.dmg')) {
-      // No extraction needed for .dmg files, we just mount them
-      return destination
-    }
-  } else if (platform.IS_LINUX || platform.IS_LINUX_ARM) {
-    if (file.endsWith('.tar.gz')) {
-      // extractTar defaults to 'xz' (extracting gzipped tars).
-      extract = (file, destination) => tc.extractTar(file, destination)
-    } else if (file.endsWith('.tar.xz')) {
-      // https://www.man7.org/linux/man-pages/man1/tar.1.html
-      // -J or --xz = filter archive through xz
-      // -x for extract
-      // note: ".tar.bz2" is "-xj"
-      flags.push('-xJ')
-      extract = (file, destination, flags) => tc.extractTar(file, destination, flags)
-    }
-  }
-
-  return await extract(file, destination, flags)
 }
 
 /**
