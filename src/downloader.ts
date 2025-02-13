@@ -95,21 +95,18 @@ export async function getUrlVulkanRuntime(version: string): Promise<string> {
   for (let attempt = 1; attempt <= 3; attempt++) {
     const vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/vulkan-runtime-components.zip`
     try {
+      // isDownloadable throws an error, if the download is not available
       await http.isDownloadable('VULKAN_RUNTIME', currentVersion, vulkanRuntimeUrl)
       return vulkanRuntimeUrl
     } catch (error) {
+      // if the download is not available, try a lower version
       core.info(`Attempt ${attempt}: Vulkan runtime for version ${currentVersion} is not downloadable.`)
-      if (attempt < 3) {
-        const lowerVersion = await versionsVulkan.getLowerVersion(currentVersion)
-        if (lowerVersion === currentVersion) {
-          // If lowering the version has no effect, break out.
-          break
-        }
-        currentVersion = lowerVersion
-        core.info(`Trying lower version ${currentVersion}...`)
-      } else {
-        throw new Error(`Vulkan runtime is not downloadable after ${attempt} attempts.`)
+      const lowerVersion = await versionsVulkan.getLowerVersion(currentVersion)
+      if (lowerVersion === currentVersion) {
+        throw new Error(`No lower version available for Vulkan runtime version ${currentVersion}.`)
       }
+      currentVersion = lowerVersion
+      core.info(`Trying lower version ${currentVersion}...`)
     }
   }
 
