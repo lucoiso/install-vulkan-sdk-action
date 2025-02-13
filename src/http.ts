@@ -14,7 +14,7 @@ export const client: httpm.HttpClient = new httpm.HttpClient('install-vulkan-sdk
 
 /**
  * is_downloadable checks, if an URL returns HTTP Status Code 200.
- * Otherwise, the action will fail.
+ * Otherwise, it throws an error.
  *
  * @param {string} name - The nice name.
  * @param {string} version - The version of the download.
@@ -26,7 +26,7 @@ export async function isDownloadable(name: string, version: string, url: string)
     const statusCode = HttpClientResponse.message.statusCode
     if (statusCode !== undefined) {
       if (statusCode >= 400) {
-        core.setFailed(`❌ Http(Error): The requested ${name} ${version} is not downloadable using URL: ${url}.`)
+        throw new Error(`❌ Http(Error): The requested ${name} ${version} is not downloadable using URL: ${url}.`)
       }
       if (statusCode === 200) {
         core.info(`✔️ Http(200): The requested ${name} ${version} is downloadable.`)
@@ -34,7 +34,7 @@ export async function isDownloadable(name: string, version: string, url: string)
     }
   } catch (error) {
     if (error instanceof Error) {
-      core.setFailed(error.message)
+      throw error
     }
   }
 }
