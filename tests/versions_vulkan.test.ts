@@ -23,6 +23,6 @@ describe('getLowerVersion', () => {
   it('should throw an error if available versions list is empty', async () => {
     const versions: string[] = []
 
-    await expect(getLowerVersion('1.4.304.0', versions)).rejects.toThrow('No available versions found')
+    await expect(getLowerVersion('1.4.304.0', versions)).rejects.toThrow('versions list is empty')
   })
 })

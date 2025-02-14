@@ -165,7 +165,7 @@ export async function resolveVersion(version: string): Promise<string> {
  */
 export async function getLowerVersion(version: string, allVersions: string[]): Promise<string> {
   if (!allVersions || allVersions.length === 0) {
-    throw new Error('No available versions found')
+    throw new Error('versions list is empty')
   }
   const sortedVersions = allVersions.sort((a, b) => versions.compare(b, a))
 
