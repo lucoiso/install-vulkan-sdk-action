@@ -11,7 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
-## [1.1.0] - 2024-02-04
+## [1.1.1] - 2025-02-13
+
+- handle versionised installer name on MACOS, [#489](https://github.com/jakoch/install-vulkan-sdk-action/issues/489)
+- handle missing runtime releases for Windows gracefully, [#488](https://github.com/jakoch/install-vulkan-sdk-action/issues/488)
+- fix invalid dates in changelog (v1.0.6, v1.1.0)
+- fix invalid version in package.json (v1.0.6)
+
+## [1.1.0] - 2025-02-04
 
 ### Added
 - install Vulkan SDK for MACOS, [#293](https://github.com/jakoch/install-vulkan-sdk-action/issues/293)
@@ -24,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - renamed file versiongetter.ts to versions_vulkan.ts and updated symbols
 - renamed installer.ts to installer_vulkan.ts and updated symbols
 
-## [1.0.6] - 2024-01-30
+## [1.0.6] - 2025-01-30
 
 ### Added
 - added biome
@@ -87,7 +94,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Section for Reference Links -->
 
-[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.0...HEAD
+[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.0.6...v1.1.0
 [1.0.6]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.0.4...v1.0.5
