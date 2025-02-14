@@ -68,11 +68,11 @@ interface AvailableVersions {
 export const getAvailableVersions = async (): Promise<AvailableVersions | null> => {
   const platformName = platform.getPlatform()
   const url = `https://vulkan.lunarg.com/sdk/versions/${platformName}.json`
-  const response = await http.client.getJson<AvailableVersions>(url)
+  const response = await http.client.getJson<string[]>(url)
   if (!response.result) {
     throw new Error(`Unable to retrieve the list of all available VULKAN SDK versions from '${url}'`)
   }
-  return response.result
+  return { versions: response.result }
 }
 
 /**
