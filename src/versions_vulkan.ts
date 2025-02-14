@@ -163,7 +163,7 @@ export async function resolveVersion(version: string): Promise<string> {
  * @param {AvailableVersions} allVersions - The list of all available versions.
  * @return {*}  {Promise<string>} The next lower version.
  */
-export async function getLowerVersion(version: string, allVersions:AvailableVersions): Promise<string> {
+export async function getLowerVersion(version: string, allVersions: AvailableVersions): Promise<string> {
   if (allVersions === null || allVersions.versions.length === 0) {
     throw new Error('No available versions found')
   }
