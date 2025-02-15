@@ -19,7 +19,7 @@
     "lineWidth": 120,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": [".devcontainer/", ".github/", "build-tools/", "dist/", "lib/", "node_modules/"]
+    "ignore": [".devcontainer/", ".github/", "build-tools/", "dist/", "lib/", "node_modules/", "coverage/"]
   },
   "organizeImports": {
     "enabled": true
