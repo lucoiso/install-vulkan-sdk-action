@@ -1,7 +1,16 @@
-# `dist/index.js` is a special file in Actions.
-# When you reference an action with `uses:` in a workflow, `index.js` is the code that will run.
-# For our project, we generate this file through a build process from other source files.
-# We need to make sure the checked-in `index.js` actually matches what we expect it to be.
+#
+# SPDX-FileCopyrightText: 2021-2025 Jens A. Koch.
+# SPDX-License-Identifier: MIT
+#
+# This file is part of https://github.com/jakoch/install-vulkan-sdk-action
+
+# This workflow checks the `dist/` directory for uncommitted changes by comparing it with a fresh build from `src/`.
+# `dist/index.js` is a crucial file in GitHub Actions.
+# When an action is referenced using `uses:` in a workflow, `dist/index.js` serves as the entry point.
+# In our project, this file is generated through a build process from `src/*.ts` source files.
+# To maintain consistency, we must ensure that the checked-in `dist/index.js` is always up to date with the source files.
+# This workflow prevents cases where source files are modified but `dist/index.js` is not regenerated.
+
 name: "❔️ Check Dist Folder"
 
 on:
