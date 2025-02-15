@@ -10,8 +10,8 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js,ts}', // Include all JS/TS files in /src
-    '!src/**/*.d.ts'    // Exclude type definition files
+    '!src/**/*.d.ts' // Exclude type definition files
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['json', 'lcov', 'text', 'clover']
-};
+}
