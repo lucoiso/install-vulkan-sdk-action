@@ -35,7 +35,9 @@
         // biome
         "biomejs.biome",
         // Github Actions
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        // jest
+        "orta.vscode-jest"
       ]
     },
     "settings": {
