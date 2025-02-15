@@ -3,9 +3,15 @@ module.exports = {
   moduleFileExtensions: ['js', 'ts'],
   testEnvironment: 'node',
   testMatch: ['**/tests/*.test.ts'],
-  //testRunner: 'jest-circus/runner',
   transform: {
     '^.+\\.ts$': 'ts-jest'
   },
-  verbose: true
-}
+  verbose: true,
+  collectCoverage: true,
+  collectCoverageFrom: [
+    'src/**/*.{js,ts}', // Include all JS/TS files in /src
+    '!src/**/*.d.ts'    // Exclude type definition files
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['json', 'lcov', 'text', 'clover']
+};
