@@ -6,10 +6,10 @@
 import path from 'node:path'
 import * as inputs from '../src/inputs'
 import { getInputs } from '../src/inputs'
-import * as core from '@actions/core';
+import * as core from '@actions/core'
 
 // Mock the core.getInput function
-jest.mock('@actions/core');
+jest.mock('@actions/core')
 
 describe('getInputs', () => {
   afterEach(() => {
@@ -20,7 +20,7 @@ describe('getInputs', () => {
 
   it('should return expected input values', async () => {
     // Mock core.getInput behavior
-    (core.getInput as jest.Mock).mockImplementation((name: string) => {
+    ;(core.getInput as jest.Mock).mockImplementation((name: string) => {
       const mockInputs: Record<string, string> = {
         vulkan_version: '1.3.261.1',
         destination: '/some/path',
@@ -31,9 +31,9 @@ describe('getInputs', () => {
         stripdown: 'false',
         install_swiftshader: 'true',
         install_llvmpipe: 'false'
-      };
-      return mockInputs[name] || '';
-    });
+      }
+      return mockInputs[name] || ''
+    })
 
     // Call getInputs and check the result
     await expect(getInputs()).resolves.toEqual({
@@ -88,19 +88,19 @@ describe('getInputDestination', () => {
       jest.clearAllMocks()
 
       jest.doMock('node:os', () => ({
-        platform: jest.fn(),
+        platform: jest.fn()
       }))
 
       os = require('node:os') // Reimport mocked os module
     })
 
     it('should return Windows default when platform is Windows', () => {
-      (os.platform as jest.Mock).mockReturnValue('win32')
+      ;(os.platform as jest.Mock).mockReturnValue('win32')
 
       jest.doMock('../src/platform', () => ({
         IS_WINDOWS: true,
         HOME_DIR: 'C:\\Users\\Test',
-        OS_PLATFORM: 'windows',
+        OS_PLATFORM: 'windows'
       }))
 
       const platform = require('../src/platform')
@@ -114,12 +114,12 @@ describe('getInputDestination', () => {
     })
 
     it('should return Linux default when platform is Linux', () => {
-      (os.platform as jest.Mock).mockReturnValue('linux')
+      ;(os.platform as jest.Mock).mockReturnValue('linux')
 
       jest.doMock('../src/platform', () => ({
         IS_LINUX: true,
         HOME_DIR: '/home/test',
-        OS_PLATFORM: 'linux',
+        OS_PLATFORM: 'linux'
       }))
 
       const platform = require('../src/platform')
@@ -133,12 +133,12 @@ describe('getInputDestination', () => {
     })
 
     it('should return macOS default when platform is macOS', () => {
-      (os.platform as jest.Mock).mockReturnValue('darwin')
+      ;(os.platform as jest.Mock).mockReturnValue('darwin')
 
       jest.doMock('../src/platform', () => ({
         IS_MAC: true,
         HOME_DIR: '/home/test',
-        OS_PLATFORM: 'darwin',
+        OS_PLATFORM: 'darwin'
       }))
 
       const platform = require('../src/platform')

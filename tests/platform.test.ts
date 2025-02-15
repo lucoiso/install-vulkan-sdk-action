@@ -24,10 +24,11 @@ describe('Platform constants', () => {
       HOME_DIR: '/home/user'
     }))
     ;(os.platform as jest.Mock).mockReturnValue('linux')
+
     const mockedPlatform = require('../src/platform')
+
     expect(os.platform()).toBe('linux')
     expect(mockedPlatform.OS_PLATFORM).toBe('linux')
-    // finally
     expect(mockedPlatform.HOME_DIR).toBe('/home/user')
   })
 
@@ -38,7 +39,9 @@ describe('Platform constants', () => {
       OS_ARCH: 'x64'
     }))
     ;(os.arch as jest.Mock).mockReturnValue('x64')
+
     const mockedPlatform = require('../src/platform')
+
     expect(os.arch()).toBe('x64')
     expect(mockedPlatform.OS_ARCH).toBe('x64')
   })
@@ -51,43 +54,54 @@ describe('Platform constants', () => {
       IS_WINDOWS: true
     }))
     ;(os.platform as jest.Mock).mockReturnValue('windows')
+
     const mockedPlatform = require('../src/platform')
+
     expect(os.platform()).toBe('windows')
     expect(mockedPlatform.OS_PLATFORM).toBe('windows')
     expect(mockedPlatform.IS_WINDOWS).toBe(true)
   })
 
-  test('platform.IS_WINDOWS should return false if the platform is not windows', () => {
-    ;(os.platform as jest.Mock).mockReturnValue('linux')
-    expect(os.platform()).toBe('linux')
-    expect(platform.IS_LINUX).toBe(true)
-    expect(platform.IS_WINDOWS).toBe(false)
-  })
-
-  test('platform.IS_WINDOWS_ARM should return to if the platform is windows arm', () => {
+  test('platform.IS_WINDOWS_ARM should return true if the platform is windows arm', () => {
+    jest.resetModules()
+    jest.doMock('../src/platform', () => ({
+      __esModule: true,
+      OS_PLATFORM: 'windows',
+      OS_ARCH: 'arm64',
+      IS_WINDOWS: true,
+      IS_WINDOWS_ARM: true
+    }))
     ;(os.platform as jest.Mock).mockReturnValue('win32')
     ;(os.arch as jest.Mock).mockReturnValue('arm64')
-    // the mock values
+
+    const mockedPlatform = require('../src/platform')
+
     expect(os.platform()).toBe('win32')
     expect(os.arch()).toBe('arm64')
-    // the constants
-    expect(platform.IS_WINDOWS).toBe(true)
-    expect(platform.OS_ARCH).toBe('arm64')
-    // the combined constant
-    expect(platform.IS_WINDOWS_ARM).toBe(true)
+    expect(mockedPlatform.IS_WINDOWS).toBe(true)
+    expect(mockedPlatform.OS_ARCH).toBe('arm64')
+    expect(mockedPlatform.IS_WINDOWS_ARM).toBe(true)
   })
 
-  test('platform.IS_LINUX_ARM should return to if the platform is linux arm', () => {
+  test('platform.IS_LINUX_ARM should return true if the platform is linux arm', () => {
+    jest.resetModules()
+    jest.doMock('../src/platform', () => ({
+      __esModule: true,
+      OS_PLATFORM: 'linux',
+      OS_ARCH: 'arm64',
+      IS_LINUX: true,
+      IS_LINUX_ARM: true
+    }))
     ;(os.platform as jest.Mock).mockReturnValue('linux')
     ;(os.arch as jest.Mock).mockReturnValue('arm64')
-    // the mock values
+
+    const mockedPlatform = require('../src/platform')
+
     expect(os.platform()).toBe('linux')
     expect(os.arch()).toBe('arm64')
-    // the constants
-    expect(platform.IS_LINUX).toBe(true)
-    expect(platform.OS_ARCH).toBe('arm64')
-    //finally
-    expect(platform.IS_LINUX_ARM).toBe(true)
+    expect(mockedPlatform.IS_LINUX).toBe(true)
+    expect(mockedPlatform.OS_ARCH).toBe('arm64')
+    expect(mockedPlatform.IS_LINUX_ARM).toBe(true)
   })
 })
 

@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ *  SPDX-FileCopyrightText: 2021-2025 Jens A. Koch
+ *  SPDX-License-Identifier: MIT
+ *--------------------------------------------------------------------------------------------*/
+
 import { getLowerVersion } from '../src/versions_vulkan'
 
 describe('getLowerVersion', () => {
