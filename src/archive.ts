@@ -35,11 +35,11 @@ export async function extract(file: string, destination: string): Promise<string
       extract = (file, destination) => tc.extract7z(file, destination)
     }
   } else if (platform.IS_MAC) {
-    if (file.endsWith('.zip')) {
-      extract = (file, destination) => tc.extractZip(file, destination)
-    } else if (file.endsWith('.dmg')) {
+    if (file.endsWith('.dmg')) {
       // No extraction needed for .dmg files, we just mount them
       return destination
+    } else if (file.endsWith('.zip')) {
+      extract = (file, destination) => tc.extractZip(file, destination)
     }
   } else if (platform.IS_LINUX || platform.IS_LINUX_ARM) {
     if (file.endsWith('.tar.gz')) {
