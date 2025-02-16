@@ -101,7 +101,7 @@ export const getLatestVersions = async (): Promise<LatestVersionResponse | null>
  * @param {LatestVersionResponse} latestVersion
  * @return {*}  {string}
  */
-function getLatestVersionForPlatform(latestVersion: LatestVersionResponse): string {
+export function getLatestVersionForPlatform(latestVersion: LatestVersionResponse): string {
   if (platform.IS_WINDOWS) {
     return latestVersion.windows
   }
