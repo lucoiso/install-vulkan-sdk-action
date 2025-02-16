@@ -40,9 +40,7 @@ describe('getInputs', () => {
       installRuntime: true,
       useCache: false,
       optionalComponents: [],
-      stripdown: false,
-      installSwiftshader: true,
-      installLlvmpipe: false
+      stripdown: false
     })
   })
 })
