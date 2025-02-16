@@ -28,9 +28,7 @@ describe('getInputs', () => {
         cache: 'false',
         // invalid components are filtered out, so the expected array is empty
         optional_components: 'someInvalidComponent,anotherInvalidComponent',
-        stripdown: 'false',
-        install_swiftshader: 'true',
-        install_llvmpipe: 'false'
+        stripdown: 'false'
       }
       return mockInputs[name] || ''
     })
