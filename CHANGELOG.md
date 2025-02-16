@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
+- added orta.vscode-jest as vscode extension to the devcontainer
+- adjusted the Jest configuration to generate coverage information
+  based on the `/src` folder, not exclusively on the existing test files
+- added tests and increased coverage
+
 ## [1.1.1] - 2025-02-13
 
 - handle versionised installer name on MACOS, [#489](https://github.com/jakoch/install-vulkan-sdk-action/issues/489)

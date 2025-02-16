@@ -14,9 +14,9 @@ describe('GitHub Release API', () => {
       {
         name: 'release.zip',
         url: 'https://api.github.com/repos/owner/repo/releases/assets/456',
-        browserDownloadUrl: 'https://github.com/owner/repo/releases/download/v1.2.3/release.zip',
-      },
-    ],
+        browserDownloadUrl: 'https://github.com/owner/repo/releases/download/v1.2.3/release.zip'
+      }
+    ]
   }
 
   beforeEach(() => {
@@ -60,9 +60,8 @@ describe('GitHub Release API', () => {
     const releaseWithoutTag = {
       assetsUrl: 'https://api.github.com/repos/owner/repo/releases/assets',
       uploadUrl: 'https://uploads.github.com/repos/owner/repo/releases/123/assets',
-      assets: [],
+      assets: []
     } as unknown as GithubRelease // Cast to match expected type
-
     ;(http.client.getJson as jest.Mock).mockResolvedValue({ result: releaseWithoutTag })
 
     const version = await getLatestVersion('owner', 'repo')

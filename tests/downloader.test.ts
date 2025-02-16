@@ -1,4 +1,10 @@
-import { getUrlVulkanSdk, getUrlVulkanRuntime, downloadVulkanSdk, downloadVulkanRuntime, getVulkanSdkFilename } from '../src/downloader'
+import {
+  getUrlVulkanSdk,
+  getUrlVulkanRuntime,
+  downloadVulkanSdk,
+  downloadVulkanRuntime,
+  getVulkanSdkFilename
+} from '../src/downloader'
 import * as platform from '../src/platform'
 //import * as versions from '../src/versions'
 import * as versionsVulkan from '../src/versions_vulkan'
@@ -31,7 +37,6 @@ describe('downloader', () => {
       Object.defineProperty(platform, 'IS_WINDOWS', { value: true, configurable: true })
       const version = '1.3.216.0'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/windows/VulkanSDK-${version}-Installer.exe`
-
       ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
 
       const url = await getUrlVulkanSdk(version)
@@ -43,7 +48,6 @@ describe('downloader', () => {
       Object.defineProperty(platform, 'IS_LINUX', { value: true, configurable: true })
       const version = '1.3.250.1'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/linux/vulkansdk-linux-x86_64-${version}.tar.gz`
-
       ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
 
       const url = await getUrlVulkanSdk(version)
@@ -55,7 +59,6 @@ describe('downloader', () => {
       Object.defineProperty(platform, 'IS_MAC', { value: true, configurable: true })
       const version = '1.3.290.0'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/mac/vulkansdk-macos-${version}.dmg`
-
       ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
 
       const url = await getUrlVulkanSdk(version)
@@ -68,7 +71,6 @@ describe('downloader', () => {
       ;(platform.getPlatform as jest.Mock).mockReturnValue('windows')
       const version = '1.3.216.0'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/windows/vulkan-runtime-components.zip`
-
       ;(versionsVulkan.getAvailableVersions as jest.Mock).mockResolvedValue({ versions: [version] })
       ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
 
@@ -81,7 +83,6 @@ describe('downloader', () => {
       const version = '1.3.216.0'
       const lowerVersion = '1.3.215.0'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${lowerVersion}/windows/vulkan-runtime-components.zip`
-
       ;(versionsVulkan.getAvailableVersions as jest.Mock).mockResolvedValue({ versions: [version, lowerVersion] })
       ;(http.isDownloadable as jest.Mock).mockRejectedValueOnce(new Error('Not downloadable'))
       ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
