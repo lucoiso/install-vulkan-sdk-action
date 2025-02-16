@@ -17,13 +17,13 @@ describe('extract function', () => {
     jest.clearAllMocks()
   })
 
-  it('returns destination for .exe files on Windows', async () => {
+  it('returns destination for .exe files on IS_WINDOWS', async () => {
     ;(platform.IS_WINDOWS as unknown as jest.Mock).mockReturnValue(true)
     const result = await extract('test.exe', '/destination')
     expect(result).toBe('/destination')
   })
 
-  it('returns destination for .exe files on Windows', async () => {
+  it('returns destination for .exe files on IS_WINDOWS_ARM', async () => {
     ;(platform.IS_WINDOWS_ARM as unknown as jest.Mock).mockReturnValue(true)
     const result = await extract('test.exe', '/destination')
     expect(result).toBe('/destination')
