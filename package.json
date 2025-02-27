@@ -20,6 +20,7 @@
     "npm:clean_install": "npm clean-install --no-audit --strict-peer-deps",
     "npm:install": "npm install --no-audit --strict-peer-deps",
     "npm:update": "npm update --no-audit --strict-peer-deps",
+    "pre-commit": "run-s format:write lint:fix test",
     "all": "npm run format:write && npm run build && npm run npm:audit && npm run package && npm test"
   },
   "keywords": ["actions", "vulkan", "vulkan-sdk", "setup", "install"],
@@ -36,6 +37,7 @@
     "@types/jest": "^29",
     "@types/node": "^22.10",
     "@vercel/ncc": "^0.38.0",
+    "husky": "^9.1.1",
     "jest": "^29",
     "ts-jest": "^29",
     "typescript": "^5.6.2"
