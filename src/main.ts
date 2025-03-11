@@ -188,9 +188,7 @@ export async function run(): Promise<void> {
 
     if (platform.IS_WINDOWS && inputs.installSwiftshader) {
       core.info(`🚀 Installing SwiftShader library...`)
-      const swiftshaderInstallPath = await installerSwiftshader.installSwiftShader(
-        inputs.swiftshaderDestination
-      )
+      const swiftshaderInstallPath = await installerSwiftshader.installSwiftShader(inputs.swiftshaderDestination)
       core.info(`✔️ [INFO] Path to SwiftShader: ${swiftshaderInstallPath}`)
     }
 
@@ -200,9 +198,7 @@ export async function run(): Promise<void> {
 
     if (platform.IS_WINDOWS && inputs.installLavapipe) {
       core.info(`🚀 Installing Lavapipe library...`)
-      const LavapipeInstallPath = await installerLavapipe.installLavapipe(
-        inputs.lavapipeDestination
-      )
+      const LavapipeInstallPath = await installerLavapipe.installLavapipe(inputs.lavapipeDestination)
       core.info(`✔️ [INFO] Path to Lavapipe: ${LavapipeInstallPath}`)
     }
 
