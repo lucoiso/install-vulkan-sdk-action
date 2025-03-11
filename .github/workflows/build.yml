@@ -237,14 +237,20 @@ jobs:
         with:
           # Vulkan SDK version to download. Default: latest version.
           vulkan_version: latest
-          optional_components: com.lunarg.vulkan.vma, com.lunarg.vulkan.volk
-          install_runtime: true
+          optional_components: com.lunarg.vulkan.vma
+          install_runtime: false
           cache: false
           stripdown: true
           # Swiftshader. Default: latest version.
           install_swiftshader: true
           # Lavapipe. Default: latest version.
           install_lavapipe: true
+
+      - name: List Files
+        if: contains(matrix.config.OS, 'windows')
+        run: |
+          if exist C:\Swiftshader dir /s C:\Swiftshader
+          if exist C:\Lavapipe dir /s C:\Lavapipe
 
       #- name: Show Env Vars and SDK folder (Linux)
       #  if: contains(matrix.config.OS, 'ubuntu')

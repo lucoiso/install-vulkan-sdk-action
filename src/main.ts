@@ -11,6 +11,7 @@ import * as errors from './errors'
 import * as input from './inputs'
 import * as installerVulkan from './installer_vulkan'
 import * as installerSwiftshader from './installer_swiftshader'
+import * as installerLavapipe from './installer_lavapipe'
 import * as platform from './platform'
 import * as versionsVulkan from './versions_vulkan'
 
@@ -187,7 +188,9 @@ export async function run(): Promise<void> {
 
     if (platform.IS_WINDOWS && inputs.installSwiftshader) {
       core.info(`🚀 Installing SwiftShader library...`)
-      const swiftshaderInstallPath = await installerSwiftshader.installSwiftShader(inputs.swiftshaderDestination)
+      const swiftshaderInstallPath = await installerSwiftshader.installSwiftShader(
+        inputs.swiftshaderDestination
+      )
       core.info(`✔️ [INFO] Path to SwiftShader: ${swiftshaderInstallPath}`)
     }
 
@@ -195,14 +198,13 @@ export async function run(): Promise<void> {
      * Install Lavapipe
      * ---------------------------------------------------------------------- */
 
-    /*if (platform.IS_WINDOWS && inputs.installLavapipe) {
+    if (platform.IS_WINDOWS && inputs.installLavapipe) {
       core.info(`🚀 Installing Lavapipe library...`)
       const LavapipeInstallPath = await installerLavapipe.installLavapipe(
-        inputs.LavapipeVersion,
-        inputs.LavapipeDestination
+        inputs.lavapipeDestination
       )
       core.info(`✔️ [INFO] Path to Lavapipe: ${LavapipeInstallPath}`)
-    }*/
+    }
 
     core.info(`✅ Done.`)
   } catch (error) {

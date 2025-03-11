@@ -15,7 +15,7 @@ import * as http from './http'
  * @param {string} version - The version of the Mesa lavapipe.
  * @param {string} destination - The destination path for the Mesa lavapipe.
  */
-export async function installlavapipe(destination: string): Promise<string> {
+export async function installLavapipe(destination: string): Promise<string> {
   let installPath = ''
 
   const downloadUrl = await getDownloadUrl()
