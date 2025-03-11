@@ -126,14 +126,18 @@ You can find all Inputs and Outputs and their default settings in the [action.ym
 
 The following inputs can be used as `steps.with` keys:
 
-| Name                 | Type    | Description                             | Default                 | Required |
-|----------------------|---------|-----------------------------------------|-------------------------|----------|
-| `vulkan_version`     | String  | A Vulkan SDK version (eg. `1.3.231.1`). | If `vulkan_version` is not set, the latest version is used. | false |
-| `destination`        | String  | The Vulkan SDK installation folder.     | Windows: `C:\VulkanSDK`. Linux/MacOS: `%HOME` | false |
-| `optional_components`| String  | Comma-separated list of components to install. | Default: no optional components. | false |
-| `install_runtime`    | bool    | Windows only. Installs the vulkan runtime ('vulkan-1.dll') into a `runtime` folder inside `destination`, if true. Windows: `C:\VulkanSDK\runtime`. | true | false |
-| `cache`              | bool    | Cache the Vulkan installation folder.   | true | false |
-| `stripdown`          | bool    | Windows only. Weather to reduce the size of the SDK, before caching. | false | false |
+| Name                     | Type    | Description                             | Default                 | Required |
+|--------------------------|---------|-----------------------------------------|-------------------------|----------|
+| `vulkan_version`         | String  | A Vulkan SDK version (eg. `1.3.231.1`). | If `vulkan_version` is not set, the latest version is used. | false |
+| `destination`            | String  | The Vulkan SDK installation folder.     | Windows: `C:\VulkanSDK`. Linux/MacOS: `%HOME/vulkan-sdk` | false |
+| `optional_components`    | String  | Comma-separated list of components to install. | Default: no optional components. | false |
+| `install_runtime`        | bool    | Windows only. Installs the vulkan runtime ('vulkan-1.dll') into a `runtime` folder inside `destination`, if true. Windows: `C:\VulkanSDK\runtime`.    | true | false |
+| `cache`                  | bool    | Cache the Vulkan installation folder.   | true | false |
+| `stripdown`              | bool    | Windows only. Weather to reduce the size of the SDK, before caching. | false | false |
+| `install_swiftshader`    | bool    | Windows only. Installs Google's SwiftShader software rasterizer. Default: false. | false | false
+| `swiftshader_destination`| String  | The installation folder for SwiftShader. | Windows: `C:\swiftshader`. Linux/MacOS: `%HOME/swiftshader` | false
+| `install_lavapipe`       | bool    | Windows only. Installs Mesa's Lavapipe software rasterizer. Default: false. | false
+| `lavapipe_destination`   | String  | The installation folder for Lavapipe.    | Windows: `C:\lavapipe`. Linux/MacOS: `%HOME/lavapipe` | false
 
 ### Outputs
 
@@ -148,13 +152,13 @@ The following output variables are available:
 
 The following environment variables are set:
 
-| Name                | Type    |  Description                                   |
-|---------------------|---------|------------------------------------------------|
-| `VULKAN_VERSION`    | String  | The installed Vulkan SDK version.              |
-| `VULKAN_SDK`        | String  | The location of your Vulkan SDK files          |
-| `VK_LAYER_PATH`     | String  | Linux only: The location of /etc/vulkan/explicit_layer.d  |
-| `LD_LIBRARY_PATH`   | String  | Linux only: path to vulkan library  |
-| `DYLD_LIBRARY_PATH` | String  | Mac only: path to vulkan library  |
+| Name                | Type    |  Description                                               |
+|---------------------|---------|------------------------------------------------------------|
+| `VULKAN_VERSION`    | String  | The installed Vulkan SDK version.                          |
+| `VULKAN_SDK`        | String  | The location of your Vulkan SDK files                      |
+| `VK_LAYER_PATH`     | String  | Linux only: The location of /share/vulkan/explicit_layer.d |
+| `LD_LIBRARY_PATH`   | String  | Linux only: path to vulkan library                         |
+| `DYLD_LIBRARY_PATH` | String  | Mac only: path to vulkan library                           |
 
 ## Features
 

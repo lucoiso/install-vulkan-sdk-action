@@ -22,25 +22,39 @@ describe('getInputs', () => {
     // Mock core.getInput behavior
     ;(core.getInput as jest.Mock).mockImplementation((name: string) => {
       const mockInputs: Record<string, string> = {
+        // vulkan
         vulkan_version: '1.3.261.1',
         destination: '/some/path',
         install_runtime: 'true',
         cache: 'false',
         // invalid components are filtered out, so the expected array is empty
         optional_components: 'someInvalidComponent,anotherInvalidComponent',
-        stripdown: 'false'
+        stripdown: 'false',
+        // swiftshader
+        installSwiftshader: 'false',
+        swiftshaderDestination: '/root/swiftshader',
+        // lavapipe
+        installLavapipe: 'false',
+        lavapipeDestination: '/root/lavapipe'
       }
       return mockInputs[name] || ''
     })
 
     // Call getInputs and check the result
     await expect(getInputs()).resolves.toEqual({
+      // vulkan
       version: '1.3.261.1',
       destination: '/some/path',
       installRuntime: true,
       useCache: false,
       optionalComponents: [],
-      stripdown: false
+      stripdown: false,
+      // swiftshader
+      installSwiftshader: false,
+      swiftshaderDestination: '/root/swiftshader',
+      // lavapipe
+      installLavapipe: false,
+      lavapipeDestination: '/root/lavapipe'
     })
   })
 })
@@ -73,7 +87,7 @@ describe('getInputDestination', () => {
   it('should return normalized provided destination if non-empty', () => {
     const provided = 'my/custom/../destination'
     const normalized = path.normalize(provided)
-    expect(inputs.getInputDestination(provided)).toEqual(normalized)
+    expect(inputs.getInputVulkanDestination(provided)).toEqual(normalized)
   })
 
   describe('when destination is empty', () => {
@@ -106,7 +120,7 @@ describe('getInputDestination', () => {
       expect(platform.OS_PLATFORM).toBe('windows')
 
       const expected = path.normalize('C:\\VulkanSDK\\')
-      expect(inputs.getInputDestination('')).toEqual(expected)
+      expect(inputs.getInputVulkanDestination('')).toEqual(expected)
     })
 
     it('should return Linux default when platform is Linux', () => {
@@ -125,7 +139,7 @@ describe('getInputDestination', () => {
       expect(platform.OS_PLATFORM).toBe('linux')
 
       const expected = path.normalize('/home/test/vulkan-sdk')
-      expect(inputs.getInputDestination('')).toEqual(expected)
+      expect(inputs.getInputVulkanDestination('')).toEqual(expected)
     })
 
     it('should return macOS default when platform is macOS', () => {
@@ -144,7 +158,7 @@ describe('getInputDestination', () => {
       expect(platform.OS_PLATFORM).toBe('darwin')
 
       const expected = path.normalize('/home/test/vulkan-sdk')
-      expect(inputs.getInputDestination('')).toEqual(expected)
+      expect(inputs.getInputVulkanDestination('')).toEqual(expected)
     })
   })
 })

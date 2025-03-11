@@ -33,6 +33,8 @@ export async function isDownloadable(name: string, version: string, url: string)
       }
     }
   } catch (error) {
+    // Rethrow the error to let the caller handle it.
+    // This enables retrying with a lower version using a for-loop with try-catch.
     if (error instanceof Error) {
       throw error
     }

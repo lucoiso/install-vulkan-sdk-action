@@ -7,8 +7,10 @@ import * as cache from '@actions/cache'
 import * as core from '@actions/core'
 import * as path from 'node:path'
 import * as downloader from './downloader'
+import * as errors from './errors'
 import * as input from './inputs'
 import * as installerVulkan from './installer_vulkan'
+import * as installerSwiftshader from './installer_swiftshader'
 import * as platform from './platform'
 import * as versionsVulkan from './versions_vulkan'
 
@@ -104,22 +106,13 @@ async function getVulkanSdk(
 }
 
 /**
- * Error handler, prints errors to the GitHub Actions console
- * and let's the action exit with exit code 1.
- *
- * @param {Error} error
- */
-function errorHandler(error: Error): void {
-  const message = error.stack || error.message || String(error)
-  core.setFailed(message)
-}
-
-/**
  * This is the main function.
+ *
+ * The function needs to be exported to be found by github/local-action.
  *
  * @return {*}  {Promise<void>}
  */
-async function run(): Promise<void> {
+export async function run(): Promise<void> {
   try {
     const inputs: input.Inputs = await input.getInputs()
 
@@ -158,8 +151,8 @@ async function run(): Promise<void> {
       core.info(`✔️ [ENV] Set env variable VULKAN_VERSION -> "${version}".`)
 
       if (platform.IS_LINUX || platform.IS_LINUX_ARM || platform.IS_MAC) {
-        // export VK_LAYER_PATH=$VULKAN_SDK/etc/vulkan/explicit_layer.d
-        const vkLayerPath = `${installPath}/etc/vulkan/explicit_layer.d`
+        // export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d
+        const vkLayerPath = `${installPath}/share/vulkan/explicit_layer.d`
         core.exportVariable('VK_LAYER_PATH', vkLayerPath)
         core.info(`✔️ [ENV] Set env variable VK_LAYER_PATH -> "${vkLayerPath}".`)
 
@@ -188,9 +181,32 @@ async function run(): Promise<void> {
       }
     }
 
+    /* ----------------------------------------------------------------------
+     * Install SwiftShader
+     * ---------------------------------------------------------------------- */
+
+    if (platform.IS_WINDOWS && inputs.installSwiftshader) {
+      core.info(`🚀 Installing SwiftShader library...`)
+      const swiftshaderInstallPath = await installerSwiftshader.installSwiftShader(inputs.swiftshaderDestination)
+      core.info(`✔️ [INFO] Path to SwiftShader: ${swiftshaderInstallPath}`)
+    }
+
+    /* ----------------------------------------------------------------------
+     * Install Lavapipe
+     * ---------------------------------------------------------------------- */
+
+    /*if (platform.IS_WINDOWS && inputs.installLavapipe) {
+      core.info(`🚀 Installing Lavapipe library...`)
+      const LavapipeInstallPath = await installerLavapipe.installLavapipe(
+        inputs.LavapipeVersion,
+        inputs.LavapipeDestination
+      )
+      core.info(`✔️ [INFO] Path to Lavapipe: ${LavapipeInstallPath}`)
+    }*/
+
     core.info(`✅ Done.`)
   } catch (error) {
-    errorHandler(error as Error)
+    errors.handleError(error as Error)
   }
 }
 

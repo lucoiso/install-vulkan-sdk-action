@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - adjusted the Jest configuration to generate coverage information
   based on the `/src` folder, not exclusively on the existing test files
 - added tests and increased coverage
+- fixed VK_LAYER_PATH, use `share` instead of `etc`: `.../share/vulkan/explicit_layer.d`
 
 ## [1.1.1] - 2025-02-13
 

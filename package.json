@@ -12,6 +12,7 @@
     "format:write": "npx @biomejs/biome format --write",
     "lint:check": "npx @biomejs/biome lint",
     "lint:fix": "npx @biomejs/biome lint --write",
+    "local:run": "npx @github/local-action run . ./src/main.ts env.local",
     "package": "ncc build --source-map --minify",
     "test": "jest --no-cache --verbose --detectOpenHandles --runInBand",
     "test:cov": "jest --verbose --coverage",
@@ -20,7 +21,7 @@
     "npm:clean_install": "npm clean-install --no-audit --strict-peer-deps",
     "npm:install": "npm install --no-audit --strict-peer-deps",
     "npm:update": "npm update --no-audit --strict-peer-deps",
-    "pre-commit": "run-s format:write lint:fix test",
+    "pre-commit": "npm run all",
     "all": "npm run format:write && npm run build && npm run npm:audit && npm run package && npm test"
   },
   "keywords": ["actions", "vulkan", "vulkan-sdk", "setup", "install"],
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@github/local-action": "^2.6.4",
     "@types/jest": "^29",
     "@types/node": "^22.10",
     "@vercel/ncc": "^0.38.0",

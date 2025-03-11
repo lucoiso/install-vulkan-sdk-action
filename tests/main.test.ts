@@ -41,12 +41,12 @@ describe('inputs', () => {
 
   test('When optional_components list contains invalid values, it results in an empty components list', async () => {
     const optional_components = 'a, b, c'
-    const out = inputs.getInputOptionalComponents(optional_components)
+    const out = inputs.getInputVulkanOptionalComponents(optional_components)
     expect((await out).length).toBe(0)
   })
   test('The optional_components list is filtered for valid values', async () => {
     const optional_components = 'a, b, com.lunarg.vulkan.32bit'
-    const out = inputs.getInputOptionalComponents(optional_components)
+    const out = inputs.getInputVulkanOptionalComponents(optional_components)
     const expected_optional_components = 'com.lunarg.vulkan.32bit'
     const first_element_of_out_array = (await out).find(Boolean)
     expect(first_element_of_out_array).toEqual(expected_optional_components)

@@ -7,6 +7,7 @@ import * as core from '@actions/core'
 import * as tc from '@actions/tool-cache' // https://github.com/actions/toolkit/tree/main/packages/tool-cache
 import * as path from 'node:path'
 import * as http from './http'
+import * as errors from './errors'
 import * as platform from './platform'
 import * as versions from './versions'
 import * as versionsVulkan from './versions_vulkan'
@@ -89,37 +90,41 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
  * @return {*}  {Promise<string>} Returns the download url.
  */
 export async function getUrlVulkanRuntime(version: string): Promise<string> {
-  let currentVersion = version
-  const platformName = platform.getPlatform()
+  try {
+    let currentVersion = version
+    const platformName = platform.getPlatform()
+    const availableVersions = await versionsVulkan.getAvailableVersions()
 
-  const availableVersions = await versionsVulkan.getAvailableVersions()
-  if (availableVersions === null) {
-    throw new Error('No available versions found')
-  }
-
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    const vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/vulkan-runtime-components.zip`
-    try {
-      // isDownloadable throws, if the download is not available
-      await http.isDownloadable('VULKAN_RUNTIME', currentVersion, vulkanRuntimeUrl)
-      return vulkanRuntimeUrl
-    } catch (error) {
-      // if download not available, try a lower version
-      core.info(`Attempt ${attempt}: Vulkan runtime for version ${currentVersion} is not downloadable.`)
-      core.info(`Available versions: ${JSON.stringify(availableVersions, null, 2)}`)
-
-      const lowerVersion = await versionsVulkan.getLowerVersion(currentVersion, availableVersions.versions)
-
-      if (lowerVersion === currentVersion) {
-        core.info(`No lower version available for Vulkan runtime version ${currentVersion}.`)
-      }
-
-      core.info(`Trying to download using a lower version ${lowerVersion}...`)
-      currentVersion = lowerVersion
+    if (availableVersions === null) {
+      throw new Error('No available versions found')
     }
-  }
 
-  throw new Error('Failed to find a downloadable Vulkan runtime version after 3 attempts.')
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      const vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/vulkan-runtime-components.zip`
+      try {
+        // isDownloadable throws, if the download is not available
+        await http.isDownloadable('VULKAN_RUNTIME', currentVersion, vulkanRuntimeUrl)
+        return vulkanRuntimeUrl
+      } catch (error) {
+        // if download not available, try a lower version
+        core.info(`Attempt ${attempt}: Vulkan runtime for version ${currentVersion} is not downloadable.`)
+        core.info(`Available versions: ${JSON.stringify(availableVersions, null, 2)}`)
+
+        const lowerVersion = await versionsVulkan.getLowerVersion(currentVersion, availableVersions.versions)
+
+        if (lowerVersion === currentVersion) {
+          core.info(`No lower version available for Vulkan runtime version ${currentVersion}.`)
+        }
+
+        core.info(`Trying to download using a lower version ${lowerVersion}...`)
+        currentVersion = lowerVersion
+      }
+    }
+    throw new Error('Failed to find a downloadable Vulkan runtime version after 3 attempts.')
+  } catch (error) {
+    errors.handleError(error as Error)
+    throw error
+  }
 }
 
 /**
