@@ -1,5 +1,6 @@
 [![GitHub Releases](https://img.shields.io/github/release/jakoch/install-vulkan-sdk-action.svg?style=flat-square)](https://github.com/jakoch/install-vulkan-sdk-action/releases/latest)
 [![GitHub Workflow Status](https://github.com/jakoch/install-vulkan-sdk-action/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/jakoch/install-vulkan-sdk-action/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/jakoch/install-vulkan-sdk-action/graph/badge.svg?token=DSXXNBEGWK)](https://codecov.io/gh/jakoch/install-vulkan-sdk-action)
 
 # Github Action: Install Vulkan SDK
 

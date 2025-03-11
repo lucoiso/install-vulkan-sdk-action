@@ -11,12 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
-- added "husky" to devDeps
-- added pre-commit hook, which runs precommit script and adds dist/ folder
-- added orta.vscode-jest as vscode extension to the devcontainer
+- added `husky` for pre-commits to devDependencies
+- added pre-commit hook, which runs precommit script and adds `dist/**` folder
+- added `orta.vscode-jest` as vscode extension to the devcontainer
 - adjusted the Jest configuration to generate coverage information
   based on the `/src` folder, not exclusively on the existing test files
 - added tests and increased coverage
+- added coverage upload to codecov.io
 - fixed VK_LAYER_PATH, use `share` instead of `etc`: `.../share/vulkan/explicit_layer.d`
 
 ## [1.1.1] - 2025-02-13

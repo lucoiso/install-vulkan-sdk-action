@@ -25,13 +25,7 @@
     "pre-commit": "npm run all",
     "all": "npm run format:write && npm run build && npm run npm:audit && npm run package && npm test"
   },
-  "keywords": [
-    "actions",
-    "vulkan",
-    "vulkan-sdk",
-    "setup",
-    "install"
-  ],
+  "keywords": ["actions", "vulkan", "vulkan-sdk", "setup", "install"],
   "main": "lib/main.js",
   "dependencies": {
     "@actions/cache": "^4",
