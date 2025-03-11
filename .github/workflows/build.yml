@@ -248,9 +248,14 @@ jobs:
 
       - name: List Files
         if: contains(matrix.config.OS, 'windows')
+        shell: cmd
         run: |
-          if exist C:\Swiftshader dir /s C:\Swiftshader
-          if exist C:\Lavapipe dir /s C:\Lavapipe
+          if exist C:\Swiftshader (
+            dir /s C:\Swiftshader
+          )
+          if exist C:\Lavapipe (
+            dir /s C:\Lavapipe
+          )
 
       #- name: Show Env Vars and SDK folder (Linux)
       #  if: contains(matrix.config.OS, 'ubuntu')
