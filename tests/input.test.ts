@@ -32,10 +32,10 @@ describe('getInputs', () => {
         stripdown: 'false',
         // swiftshader
         installSwiftshader: 'false',
-        swiftshaderDestination: '/root/swiftshader',
+        swiftshaderDestination: '/home/runner/swiftshader',
         // lavapipe
         installLavapipe: 'false',
-        lavapipeDestination: '/root/lavapipe'
+        lavapipeDestination: '/home/runner/lavapipe'
       }
       return mockInputs[name] || ''
     })
@@ -51,10 +51,10 @@ describe('getInputs', () => {
       stripdown: false,
       // swiftshader
       installSwiftshader: false,
-      swiftshaderDestination: '/root/swiftshader',
+      swiftshaderDestination: '/home/runner/swiftshader',
       // lavapipe
       installLavapipe: false,
-      lavapipeDestination: '/root/lavapipe'
+      lavapipeDestination: '/home/runner/lavapipe'
     })
   })
 })
