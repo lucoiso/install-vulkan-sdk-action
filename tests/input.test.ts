@@ -7,6 +7,7 @@ import path from 'node:path'
 import * as inputs from '../src/inputs'
 import { getInputs } from '../src/inputs'
 import * as core from '@actions/core'
+import * as platform from '../src/platform'
 
 // Mock the core.getInput function
 jest.mock('@actions/core')
@@ -32,10 +33,10 @@ describe('getInputs', () => {
         stripdown: 'false',
         // swiftshader
         installSwiftshader: 'false',
-        swiftshaderDestination: '/home/runner/swiftshader',
+        swiftshaderDestination: `${platform.HOME_DIR}/swiftshader`,
         // lavapipe
         installLavapipe: 'false',
-        lavapipeDestination: '/home/runner/lavapipe'
+        lavapipeDestination: `${platform.HOME_DIR}/lavapipe`
       }
       return mockInputs[name] || ''
     })
@@ -51,10 +52,10 @@ describe('getInputs', () => {
       stripdown: false,
       // swiftshader
       installSwiftshader: false,
-      swiftshaderDestination: '/home/runner/swiftshader',
+      swiftshaderDestination: `${platform.HOME_DIR}/swiftshader`,
       // lavapipe
       installLavapipe: false,
-      lavapipeDestination: '/home/runner/lavapipe'
+      lavapipeDestination: `${platform.HOME_DIR}/lavapipe`
     })
   })
 })

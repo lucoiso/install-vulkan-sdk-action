@@ -45,38 +45,13 @@ jobs:
         run: |
           npm run test:cov
 
-# ---------------------------------------------------------------------------------------
-
-  deploy:
-
-# ---------------------------------------------------------------------------------------
-
-    name: "Deploy Coverage Report to GitHub Pages"
-    runs-on: ubuntu-latest
-    needs: build        # depends on the build job before (coverage report)
-
-    permissions:
-      pages: write      # to deploy to Github Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    environment:
-      name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
-
-    steps:
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact (create github-pages.tar.gz)
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5 # https://github.com/codecov/codecov-action
         with:
-          name: github-pages
-          path: coverage/lcov-report
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          fail_ci_if_error: false
+          verbose: true
 
 # ---------------------------------------------------------------------------------------
 

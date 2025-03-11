@@ -7,14 +7,14 @@ jest.mock('@actions/core')
 
 describe('GitHub Release API', () => {
   const mockRelease: GithubRelease = {
-    tagName: 'v1.2.3',
-    assetsUrl: 'https://api.github.com/repos/owner/repo/releases/assets',
-    uploadUrl: 'https://uploads.github.com/repos/owner/repo/releases/123/assets',
+    tag_name: 'v1.2.3',
+    assets_url: 'https://api.github.com/repos/owner/repo/releases/assets',
+    upload_url: 'https://uploads.github.com/repos/owner/repo/releases/123/assets',
     assets: [
       {
         name: 'release.zip',
         url: 'https://api.github.com/repos/owner/repo/releases/assets/456',
-        browserDownloadUrl: 'https://github.com/owner/repo/releases/download/v1.2.3/release.zip'
+        browser_download_url: 'https://github.com/owner/repo/releases/download/v1.2.3/release.zip'
       }
     ]
   }
@@ -58,8 +58,8 @@ describe('GitHub Release API', () => {
 
   test('getLatestVersion should return null if release exists but tagName is missing', async () => {
     const releaseWithoutTag = {
-      assetsUrl: 'https://api.github.com/repos/owner/repo/releases/assets',
-      uploadUrl: 'https://uploads.github.com/repos/owner/repo/releases/123/assets',
+      assets_url: 'https://api.github.com/repos/owner/repo/releases/assets',
+      upload_url: 'https://uploads.github.com/repos/owner/repo/releases/123/assets',
       assets: []
     } as unknown as GithubRelease // Cast to match expected type
     ;(http.client.getJson as jest.Mock).mockResolvedValue({ result: releaseWithoutTag })

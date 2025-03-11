@@ -26,7 +26,7 @@ interface LatestVersions {
 }
 
 /**
- * Cached result of the latest versions.json file.
+ * Cached result of the versions.json file.
  */
 let latestVersionsPromise: Promise<LatestVersions> | null = null
 
@@ -42,10 +42,10 @@ export async function getLatestVersionsJson(): Promise<LatestVersions> {
       const latestRelease = await github.getLatestRelease('jakoch', 'rasterizers')
       if (!latestRelease) throw new Error('Failed to get latest release.')
 
-      const versionsJsonAsset = latestRelease.assets.find(asset => asset.name === 'versions.json')
-      if (!versionsJsonAsset) throw new Error('versions.json not found in latest release.')
+      const versionsJson = latestRelease.assets.find(asset => asset.name === 'versions.json')
+      if (!versionsJson) throw new Error('versions.json not found in latest release.')
 
-      const response = await fetch(versionsJsonAsset.browserDownloadUrl)
+      const response = await fetch(versionsJson.browser_download_url)
       if (!response.ok) throw new Error('Failed to download versions.json.')
 
       return response.json()

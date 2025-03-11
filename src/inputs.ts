@@ -170,7 +170,7 @@ export function getInputVulkanDestination(destination: string): string {
   // the user provided a destination, so we need to normalize it
   destination = path.normalize(destination)
 
-  core.info(`Destination: ${destination}`)
+  core.debug(`vulkansdk_destination: ${destination}`)
 
   return destination
 }
@@ -248,7 +248,8 @@ function getInputSwiftshaderDestination(destination: string): string {
     }
   }
   destination = path.normalize(destination)
-  core.info(`Destination: ${destination}`)
+
+  core.debug(`swiftshader_destination: ${destination}`)
 
   return destination
 }
@@ -302,7 +303,8 @@ function getInputLavapipeDestination(destination: string): string {
     }
   }
   destination = path.normalize(destination)
-  core.info(`Destination: ${destination}`)
+
+  core.debug(`lavapipe_destination: ${destination}`)
 
   return destination
 }
