@@ -6,11 +6,18 @@
 
 A Github Action to install the Vulkan SDK and it's runtime.
 
+This action has the following features:
+
 - This action can be used to install the Vulkan SDK in your Github Action workflows.
 - The SDK version number is automatically fetched via the Web API, if not set to a fixed version number manually (latest).
 - The installation of optional SDK components is supported.
 - The size of the installed SDK is reduced to achieve a smaller cache package size (only on Windows).
+- The action supports Github Actions cache (for the Vulkan SDK and runtime).
+- The action can be used to install the Vulkan Runtime (Windows only) using download retries and automatic version lowering.
 - The installer supports runners for Windows, Linux, macOS, Windows-ARM, and Linux-ARM.
+  - The repository [https://github.com/jakoch/vulkan-sdk-arm](https://github.com/jakoch/vulkan-sdk-arm) is used to build and package the Vulkan SDK for ARM64 runners.
+- The action can be used to install the software rasterizers: Google SwiftShader and Mesa Lavapipe.
+  - The repository [https://github.com/jakoch/rasterizers](https://github.com/jakoch/rasterizers) is used to build and package both rasterizers.
 
 ---
 
@@ -162,28 +169,6 @@ Vulkan applications.
 This installer enables you to install the latest Vulkan Runtime for development,
 allowing you to test your applications with the most up-to-date runtime and
 bundle it for redistribution when packaging your application.
-
-## Features
-
-This action has the following features:
-
-- Installation of the Vulkan SDK
-  - on Windows, Linux, Mac and ARM64 runners
-  - allows the selection of optional components from the installer
-  - automatic stripdown to decrease SDK size for GHA caching
-  - automatic caching on GHA
-- Installation Vulkan Runtime (Windows only)
-  - using download retry and automatic version lowering
-- Installation of rasterizers:
-  - Google Swiftshader
-  - Mesa Lavapipe
-
-This action is accompanied by the following two repositories:
-
-- [https://github.com/jakoch/vulkan-sdk-arm](https://github.com/jakoch/vulkan-sdk-arm)
-  - This repository builds and packages the Vulkan SDK for ARM64 runners.
-- [https://github.com/jakoch/rasterizers](https://github.com/jakoch/rasterizers)
-  - This repository builds the software rasterizers Google SwiftShader and Mesa Lavapipe.
 
 ## License
 
