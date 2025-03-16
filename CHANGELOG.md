@@ -11,13 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
+## [1.2.0] - 2025-03-16
+
+### Added
+
+- the action supports the installation of the software rasterizers SwiftShader and Lavapipe, [#425](https://github.com/jakoch/install-vulkan-sdk-action/issues/425)
 - added `husky` for pre-commits to devDependencies
 - added pre-commit hook, which runs precommit script and adds `dist/**` folder
 - added `orta.vscode-jest` as vscode extension to the devcontainer
-- adjusted the Jest configuration to generate coverage information
-  based on the `/src` folder, not exclusively on the existing test files
 - added tests and increased coverage
 - added coverage upload to codecov.io
+
+### Changed
+- adjusted the Jest configuration to generate coverage information
+  based on the `/src` folder, not exclusively on the existing test files
 - fixed VK_LAYER_PATH, use `share` instead of `etc`: `.../share/vulkan/explicit_layer.d`
 
 ## [1.1.1] - 2025-02-13
@@ -103,7 +110,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Section for Reference Links -->
 
-[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.1...HEAD
+[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.0.6...v1.1.0
 [1.0.6]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.0.5...v1.0.6

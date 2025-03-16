@@ -1,6 +1,6 @@
 {
   "name": "install-vulkan-sdk-action",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "description": "A Github Action installing the Vulkan SDK and Runtime.",
   "author": "Jens A. Koch",
@@ -21,7 +21,7 @@
     "npm:clean_install": "npm clean-install --no-audit --strict-peer-deps",
     "npm:install": "npm install --no-audit --strict-peer-deps",
     "npm:update": "npm update --no-audit --strict-peer-deps",
-    "prepare": "husky init",
+    "prepare": "husky",
     "pre-commit": "npm run all",
     "all": "npm run format:write && npm run build && npm run npm:audit && npm run package && npm test"
   },

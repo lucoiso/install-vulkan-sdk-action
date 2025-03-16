@@ -183,7 +183,7 @@ Copyright (c) 2021 Jens A. Koch
 To make a new release:
 
 - **Step 1.** Bump version number in package.json
-- **Step 2.** Run `npm run npm_install` to install the dependencies
+- **Step 2.** Run `npm run npm:install` to install the dependencies
 - **Step 3.** Run `npm run all` to generate a bundled package in dist
   - or simply open `package.json` and click the desired command via script section
 - **Step 4.** Update changelog
