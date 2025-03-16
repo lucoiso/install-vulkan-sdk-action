@@ -15,22 +15,101 @@ A Github Action to install the Vulkan SDK and it's runtime.
 ---
 
 - [Github Action: Install Vulkan SDK](#github-action-install-vulkan-sdk)
-  - [About Vulkan](#about-vulkan)
-    - [What is Vulkan?](#what-is-the-vulkan-sdk)
-    - [What is the Vulkan SDK?](#what-is-the-vulkan-sdk)
-    - [What is the Vulkan SDK for ARM?](#what-is-the-vulkan-sdk-for-arm)
-    - [What is the Vulkan Runtime?](#what-is-the-vulkan-runtime)
   - [Usage](#usage)
-    - [Quick start](#quick-start)
   - [Action Reference](#action-reference)
     - [Inputs](#inputs)
     - [Outputs](#outputs)
     - [Environment Variables](#environment-variables)
+  - [About Vulkan and the Vulkan SDK](#about-vulkan-and-the-vulkan-sdk)
+  - [What is Vulkan?](#what-is-vulkan)
+  - [What is the Vulkan SDK?](#what-is-the-vulkan-sdk)
+  - [What is the Vulkan SDK for ARM?](#what-is-the-vulkan-sdk-for-arm)
+  - [What is the Vulkan Runtime?](#what-is-the-vulkan-runtime)
+  - [Features](#features)
   - [License](#license)
+  - [Development Reminder](#development-reminder)
 
-## About Vulkan
+## Usage
 
-### What is Vulkan?
+```yaml
+jobs:
+  build:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "Windows",       os: windows-latest }
+          - { name: "Ubuntu",        os: ubuntu-latest }
+          - { name: "MacOS",         os: macos-latest }
+          - { name: "Ubuntu 22 Arm", os: ubuntu-22.04-arm }
+          - { name: "Ubuntu 24 Arm", os: ubuntu-24.04-arm }
+          # The installer supports the target platform,
+          # but Github Actions doesn't provide the runner, yet.
+          # It's expected in Q2 2025.
+          # - { name: "Windows 2025 Arm", os: windows-2025-arm }
+
+    steps:
+      - name: Install Vulkan SDK
+        uses: jakoch/install-vulkan-sdk-action@v1.1.0
+        with:
+          # You can set the Vulkan SDK version to download.
+          # Defaults to latest version, if version not set.
+          vulkan_version: 1.3.231.1
+          optional_components: com.lunarg.vulkan.vma
+          install_runtime: true
+          cache: true
+          stripdown: true
+
+          # You can install a software rasterizer.
+          install_swiftshader: true
+          install_lavapipe: true
+```
+
+## Action Reference
+
+You can find all Inputs and Outputs and their default settings in the [action.yml](https://github.com/jakoch/install-vulkan-sdk-action/blob/main/action.yml) file.
+
+### Inputs
+
+The following inputs can be used as `steps.with` keys:
+
+| Name                     | Type    | Description                             | Default                 | Required |
+|--------------------------|---------|-----------------------------------------|-------------------------|----------|
+| `vulkan_version`         | String  | A Vulkan SDK version (eg. `1.3.231.1`). | If `vulkan_version` is not set, the latest version is used. | false |
+| `destination`            | String  | The Vulkan SDK installation folder.     | Windows: `C:\VulkanSDK`. Linux/MacOS: `%HOME/vulkan-sdk` | false |
+| `optional_components`    | String  | Comma-separated list of components to install. | Default: no optional components. | false |
+| `install_runtime`        | bool    | Windows only. Installs the vulkan runtime ('vulkan-1.dll') into a `runtime` folder inside `destination`, if true. Windows: `C:\VulkanSDK\runtime`.    | true | false |
+| `cache`                  | bool    | Cache the Vulkan installation folder.   | true | false |
+| `stripdown`              | bool    | Windows only. Weather to reduce the size of the SDK, before caching. | false | false |
+| `install_swiftshader`    | bool    | Windows only. Installs Google's SwiftShader software rasterizer. Default: false. | false | false
+| `swiftshader_destination`| String  | The installation folder for SwiftShader. | Windows: `C:\swiftshader`. Linux/MacOS: `%HOME/swiftshader` | false
+| `install_lavapipe`       | bool    | Windows only. Installs Mesa's Lavapipe software rasterizer. Default: false. | false
+| `lavapipe_destination`   | String  | The installation folder for Lavapipe.    | Windows: `C:\lavapipe`. Linux/MacOS: `%HOME/lavapipe` | false
+
+### Outputs
+
+The following output variables are available:
+
+| Name               | Type    | Description                           |
+|--------------------|---------|---------------------------------------|
+| `VULKAN_VERSION`   | String  | The installed Vulkan SDK version.     |
+| `VULKAN_SDK`       | String  | The location of your Vulkan SDK files |
+
+### Environment Variables
+
+The following environment variables are set:
+
+| Name                | Type    |  Description                                               |
+|---------------------|---------|------------------------------------------------------------|
+| `VULKAN_VERSION`    | String  | The installed Vulkan SDK version.                          |
+| `VULKAN_SDK`        | String  | The location of your Vulkan SDK files                      |
+| `VK_LAYER_PATH`     | String  | Linux only: The location of /share/vulkan/explicit_layer.d |
+| `LD_LIBRARY_PATH`   | String  | Linux only: path to vulkan library                         |
+| `DYLD_LIBRARY_PATH` | String  | Mac only: path to vulkan library                           |
+
+## About Vulkan and the Vulkan SDK
+
+## What is Vulkan?
 
 > The [Khronos Vulkan API](https://khronos.org/registry/vulkan) is an explicit, low-overhead, cross-platform graphics and compute API. Vulkan provides applications with control over the system execution and the system memory to maximize application efficiency on a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.
 >
@@ -84,87 +163,27 @@ This installer enables you to install the latest Vulkan Runtime for development,
 allowing you to test your applications with the most up-to-date runtime and
 bundle it for redistribution when packaging your application.
 
-## Usage
-
-### Quick start
-
-```yaml
-jobs:
-  build:
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      matrix:
-        config:
-          - { name: "Windows",       os: windows-latest }
-          - { name: "Ubuntu",        os: ubuntu-latest }
-          - { name: "MacOS",         os: macos-latest }
-          - { name: "Ubuntu 22 Arm", os: ubuntu-22.04-arm }
-          - { name: "Ubuntu 24 Arm", os: ubuntu-24.04-arm }
-          # The installer supports the target platform,
-          # but Github Actions doesn't provide the runner, yet.
-          # It's expected in Q2 2025.
-          # - { name: "Windows 2025 Arm", os: windows-2025-arm }
-
-    steps:
-      - name: Install Vulkan SDK
-        uses: jakoch/install-vulkan-sdk-action@v1.1.0
-        with:
-          # You can set the Vulkan SDK version to download.
-          # Defaults to latest version, if version not set.
-          vulkan_version: 1.3.231.1
-          optional_components: com.lunarg.vulkan.vma
-          install_runtime: true
-          cache: true
-          stripdown: true
-
-```
-
-## Action Reference
-
-You can find all Inputs and Outputs and their default settings in the [action.yml](https://github.com/jakoch/install-vulkan-sdk-action/blob/main/action.yml) file.
-
-### Inputs
-
-The following inputs can be used as `steps.with` keys:
-
-| Name                     | Type    | Description                             | Default                 | Required |
-|--------------------------|---------|-----------------------------------------|-------------------------|----------|
-| `vulkan_version`         | String  | A Vulkan SDK version (eg. `1.3.231.1`). | If `vulkan_version` is not set, the latest version is used. | false |
-| `destination`            | String  | The Vulkan SDK installation folder.     | Windows: `C:\VulkanSDK`. Linux/MacOS: `%HOME/vulkan-sdk` | false |
-| `optional_components`    | String  | Comma-separated list of components to install. | Default: no optional components. | false |
-| `install_runtime`        | bool    | Windows only. Installs the vulkan runtime ('vulkan-1.dll') into a `runtime` folder inside `destination`, if true. Windows: `C:\VulkanSDK\runtime`.    | true | false |
-| `cache`                  | bool    | Cache the Vulkan installation folder.   | true | false |
-| `stripdown`              | bool    | Windows only. Weather to reduce the size of the SDK, before caching. | false | false |
-| `install_swiftshader`    | bool    | Windows only. Installs Google's SwiftShader software rasterizer. Default: false. | false | false
-| `swiftshader_destination`| String  | The installation folder for SwiftShader. | Windows: `C:\swiftshader`. Linux/MacOS: `%HOME/swiftshader` | false
-| `install_lavapipe`       | bool    | Windows only. Installs Mesa's Lavapipe software rasterizer. Default: false. | false
-| `lavapipe_destination`   | String  | The installation folder for Lavapipe.    | Windows: `C:\lavapipe`. Linux/MacOS: `%HOME/lavapipe` | false
-
-### Outputs
-
-The following output variables are available:
-
-| Name               | Type    | Description                           |
-|--------------------|---------|---------------------------------------|
-| `VULKAN_VERSION`   | String  | The installed Vulkan SDK version.     |
-| `VULKAN_SDK`       | String  | The location of your Vulkan SDK files |
-
-### Environment Variables
-
-The following environment variables are set:
-
-| Name                | Type    |  Description                                               |
-|---------------------|---------|------------------------------------------------------------|
-| `VULKAN_VERSION`    | String  | The installed Vulkan SDK version.                          |
-| `VULKAN_SDK`        | String  | The location of your Vulkan SDK files                      |
-| `VK_LAYER_PATH`     | String  | Linux only: The location of /share/vulkan/explicit_layer.d |
-| `LD_LIBRARY_PATH`   | String  | Linux only: path to vulkan library                         |
-| `DYLD_LIBRARY_PATH` | String  | Mac only: path to vulkan library                           |
-
 ## Features
 
-- Installs SDK
-- Installs Runtime using automatic download retry and version lowering
+This action has the following features:
+
+- Installation of the Vulkan SDK
+  - on Windows, Linux, Mac and ARM64 runners
+  - allows the selection of optional components from the installer
+  - automatic stripdown to decrease SDK size for GHA caching
+  - automatic caching on GHA
+- Installation Vulkan Runtime (Windows only)
+  - using download retry and automatic version lowering
+- Installation of rasterizers:
+  - Google Swiftshader
+  - Mesa Lavapipe
+
+This action is accompanied by the following two repositories:
+
+- [https://github.com/jakoch/vulkan-sdk-arm](https://github.com/jakoch/vulkan-sdk-arm)
+  - This repository builds and packages the Vulkan SDK for ARM64 runners.
+- [https://github.com/jakoch/rasterizers](https://github.com/jakoch/rasterizers)
+  - This repository builds the software rasterizers Google SwiftShader and Mesa Lavapipe.
 
 ## License
 

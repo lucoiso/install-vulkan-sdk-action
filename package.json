@@ -21,7 +21,7 @@
     "npm:clean_install": "npm clean-install --no-audit --strict-peer-deps",
     "npm:install": "npm install --no-audit --strict-peer-deps",
     "npm:update": "npm update --no-audit --strict-peer-deps",
-    "prepare": "husky install",
+    "prepare": "husky init",
     "pre-commit": "npm run all",
     "all": "npm run format:write && npm run build && npm run npm:audit && npm run package && npm test"
   },
@@ -36,11 +36,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@github/local-action": "^2.6.4",
+    "@github/local-action": "^3.1.1",
     "@types/jest": "^29",
     "@types/node": "^22.10",
     "@vercel/ncc": "^0.38.0",
-    "husky": "^9.1.1",
+    "husky": "^9.1.7",
     "jest": "^29",
     "ts-jest": "^29",
     "typescript": "^5.8.2"

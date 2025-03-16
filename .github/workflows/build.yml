@@ -212,8 +212,8 @@ jobs:
 
 # ---------------------------------------------------------------------------------------
 
-    # install latest version of vulkan sdk and rasterizers on windows
-    name: Install latest VKSDK + rasterizers on ${{ matrix.config.OS }}
+    # install latest version of vulkan sdk and both rasterizers on windows
+    name: Install rasterizers on ${{ matrix.config.OS }}
     runs-on: ${{ matrix.config.OS }}
 
     strategy:
