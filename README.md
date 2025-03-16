@@ -4,7 +4,26 @@
 
 # Github Action: Install Vulkan SDK
 
-A Github Action to install the Vulkan SDK and it's runtime.
+A Github Action to install the Vulkan SDK and it's runtime.^
+
+## Contents <!-- omit in toc -->
+
+- [Github Action: Install Vulkan SDK](#github-action-install-vulkan-sdk)
+  - [Features](#features)
+  - [Usage](#usage)
+  - [Action Reference](#action-reference)
+    - [Inputs](#inputs)
+    - [Outputs](#outputs)
+    - [Environment Variables](#environment-variables)
+  - [About Vulkan and the Vulkan SDK](#about-vulkan-and-the-vulkan-sdk)
+    - [What is Vulkan?](#what-is-vulkan)
+    - [What is the Vulkan SDK?](#what-is-the-vulkan-sdk)
+    - [What is the Vulkan SDK for ARM?](#what-is-the-vulkan-sdk-for-arm)
+    - [What is the Vulkan Runtime?](#what-is-the-vulkan-runtime)
+  - [License](#license)
+  - [Development Reminder](#development-reminder)
+
+## Features
 
 This action has the following features:
 
@@ -18,23 +37,6 @@ This action has the following features:
   - The repository [https://github.com/jakoch/vulkan-sdk-arm](https://github.com/jakoch/vulkan-sdk-arm) is used to build and package the Vulkan SDK for ARM64 runners.
 - The action can be used to install the software rasterizers: Google SwiftShader and Mesa Lavapipe.
   - The repository [https://github.com/jakoch/rasterizers](https://github.com/jakoch/rasterizers) is used to build and package both rasterizers.
-
----
-
-- [Github Action: Install Vulkan SDK](#github-action-install-vulkan-sdk)
-  - [Usage](#usage)
-  - [Action Reference](#action-reference)
-    - [Inputs](#inputs)
-    - [Outputs](#outputs)
-    - [Environment Variables](#environment-variables)
-  - [About Vulkan and the Vulkan SDK](#about-vulkan-and-the-vulkan-sdk)
-  - [What is Vulkan?](#what-is-vulkan)
-  - [What is the Vulkan SDK?](#what-is-the-vulkan-sdk)
-  - [What is the Vulkan SDK for ARM?](#what-is-the-vulkan-sdk-for-arm)
-  - [What is the Vulkan Runtime?](#what-is-the-vulkan-runtime)
-  - [Features](#features)
-  - [License](#license)
-  - [Development Reminder](#development-reminder)
 
 ## Usage
 
@@ -116,7 +118,7 @@ The following environment variables are set:
 
 ## About Vulkan and the Vulkan SDK
 
-## What is Vulkan?
+### What is Vulkan?
 
 > The [Khronos Vulkan API](https://khronos.org/registry/vulkan) is an explicit, low-overhead, cross-platform graphics and compute API. Vulkan provides applications with control over the system execution and the system memory to maximize application efficiency on a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.
 >
@@ -125,7 +127,7 @@ The following environment variables are set:
 
 Links: <https://vulkan.org/> | [Vulkan SDK](https://vulkan.lunarg.com/) | [Vulkan SDK Docs](https://vulkan.lunarg.com/doc/sdk/) | [Vulkan Tools](https://vulkan.org/tools) | [Vulkan @ gpuinfo](https://vulkan.gpuinfo.org/)
 
-## What is the Vulkan SDK?
+### What is the Vulkan SDK?
 
 The Vulkan Software Development Kit (SDK) is a collection of tools, libraries,
 headers, and validation layers needed to develop Vulkan applications.
@@ -141,7 +143,7 @@ It includes:
 The Vulkan SDK is provided by LunarG and is essential for developers who want
 to build and test Vulkan-based applications.
 
-## What is the Vulkan SDK for ARM?
+### What is the Vulkan SDK for ARM?
 
 The Vulkan SDK for ARM is an unofficial custom build SDK based on the official
 tarballs for Linux and build on Github Actions runners
@@ -152,7 +154,7 @@ The installer uses releases from https://github.com/jakoch/vulkan-sdk-arm.
 Currently (02-2025), KHRONOS has no plans to modify the official tarball to
 include prebuilt ARM binaries or to release or update the Ubuntu packages for ARM.
 
-## What is the Vulkan Runtime?
+### What is the Vulkan Runtime?
 
 The Vulkan Runtime (VulkanRT) refers to the essential Vulkan libraries and
 drivers installed on a system, allowing Vulkan applications to run.
