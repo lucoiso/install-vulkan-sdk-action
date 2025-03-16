@@ -4,7 +4,7 @@
 
 # Github Action: Install Vulkan SDK
 
-A Github Action to install the Vulkan SDK and it's runtime.^
+A Github Action to install the Vulkan SDK and it's runtime.
 
 ## Contents <!-- omit in toc -->
 
