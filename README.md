@@ -2,26 +2,25 @@
 [![GitHub Workflow Status](https://github.com/jakoch/install-vulkan-sdk-action/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/jakoch/install-vulkan-sdk-action/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/jakoch/install-vulkan-sdk-action/graph/badge.svg?token=DSXXNBEGWK)](https://codecov.io/gh/jakoch/install-vulkan-sdk-action)
 
-# Github Action: Install Vulkan SDK
+# Github Action: Install Vulkan SDK <!-- omit in toc -->
 
 A Github Action to install the Vulkan SDK and it's runtime.
 
 ## Contents <!-- omit in toc -->
 
-- [Github Action: Install Vulkan SDK](#github-action-install-vulkan-sdk)
-  - [Features](#features)
-  - [Usage](#usage)
-  - [Action Reference](#action-reference)
-    - [Inputs](#inputs)
-    - [Outputs](#outputs)
-    - [Environment Variables](#environment-variables)
-  - [About Vulkan and the Vulkan SDK](#about-vulkan-and-the-vulkan-sdk)
-    - [What is Vulkan?](#what-is-vulkan)
-    - [What is the Vulkan SDK?](#what-is-the-vulkan-sdk)
-    - [What is the Vulkan SDK for ARM?](#what-is-the-vulkan-sdk-for-arm)
-    - [What is the Vulkan Runtime?](#what-is-the-vulkan-runtime)
-  - [License](#license)
-  - [Development Reminder](#development-reminder)
+- [Features](#features)
+- [Usage](#usage)
+- [Action Reference](#action-reference)
+  - [Inputs](#inputs)
+  - [Outputs](#outputs)
+  - [Environment Variables](#environment-variables)
+- [About Vulkan and the Vulkan SDK](#about-vulkan-and-the-vulkan-sdk)
+  - [What is Vulkan?](#what-is-vulkan)
+  - [What is the Vulkan SDK?](#what-is-the-vulkan-sdk)
+  - [What is the Vulkan SDK for ARM?](#what-is-the-vulkan-sdk-for-arm)
+  - [What is the Vulkan Runtime?](#what-is-the-vulkan-runtime)
+- [License](#license)
+- [Development Reminder](#development-reminder)
 
 ## Features
 
