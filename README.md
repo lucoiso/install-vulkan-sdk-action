@@ -58,7 +58,7 @@ jobs:
 
     steps:
       - name: Install Vulkan SDK
-        uses: jakoch/install-vulkan-sdk-action@v1.1.0
+        uses: jakoch/install-vulkan-sdk-action@v1
         with:
           # You can set the Vulkan SDK version to download.
           # Defaults to latest version, if version not set.
