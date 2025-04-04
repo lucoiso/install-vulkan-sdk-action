@@ -27,7 +27,7 @@ A Github Action to install the Vulkan SDK and runtime library. It also supports 
 This action has the following features:
 
 - This action can be used to install the Vulkan SDK in your Github Action workflows.
-  - The SDK version number is automatically fetched via the Web API, if not set to a fixed version number manually (latest).
+  - The action automatically retrieves the latest Vulkan SDK version if no specific version is provided.
 - The installation of optional SDK components is supported.
 - The action can be used to install the Vulkan Runtime (only on Windows) using download retries and automatic version lowering.
 - The action supports Github Actions cache (for the Vulkan SDK and runtime).
