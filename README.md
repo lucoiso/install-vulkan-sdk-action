@@ -27,11 +27,11 @@ A Github Action to install the Vulkan SDK and runtime library. It also supports 
 This action has the following features:
 
 - This action can be used to install the Vulkan SDK in your Github Action workflows.
-- The SDK version number is automatically fetched via the Web API, if not set to a fixed version number manually (latest).
+  - The SDK version number is automatically fetched via the Web API, if not set to a fixed version number manually (latest).
 - The installation of optional SDK components is supported.
-- The size of the installed SDK is reduced to achieve a smaller cache package size (only on Windows).
-- The action supports Github Actions cache (for the Vulkan SDK and runtime).
 - The action can be used to install the Vulkan Runtime (Windows only) using download retries and automatic version lowering.
+- The action supports Github Actions cache (for the Vulkan SDK and runtime).
+  - The size of the installed SDK is reduced to achieve a smaller cache package size (only on Windows).
 - The installer supports runners for Windows, Linux, macOS, Windows-ARM, and Linux-ARM.
   - The repository [https://github.com/jakoch/vulkan-sdk-arm](https://github.com/jakoch/vulkan-sdk-arm) is used to build and package the Vulkan SDK for ARM64 runners.
 - The action can be used to install the software rasterizers: Google SwiftShader and Mesa Lavapipe.
