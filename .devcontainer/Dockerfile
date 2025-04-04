@@ -21,7 +21,7 @@ RUN echo "Packages" && \
 RUN echo "Setup npm, node, yarn" && \
 	  # Setup n (Node.js version manager)
     npm install -g n@latest && \
-    n 20.17.0 && \
+    n 20.18.1 && \
 	  node --version && \
     # Setup npm (Node.js package manager)
     npm install -g npm@latest && \
