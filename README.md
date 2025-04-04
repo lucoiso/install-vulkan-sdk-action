@@ -4,7 +4,7 @@
 
 # Github Action: Install Vulkan SDK <!-- omit in toc -->
 
-A Github Action to install the Vulkan SDK and it's runtime.
+A Github Action to install the Vulkan SDK and runtime library. It also supports installing SwiftShader and Lavapipe software rasterizers.
 
 ## Contents <!-- omit in toc -->
 
