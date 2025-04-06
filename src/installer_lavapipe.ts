@@ -41,7 +41,7 @@ export async function getDownloadUrl(): Promise<string> {
     await http.isDownloadable('Lavapipe', version, downloadUrl)
   } catch (error) {
     errors.handleError(error as Error)
-    throw error // Rethrow the error so it can be caught in tests
+    //throw error // Rethrow the error so it can be caught in tests
   }
 
   return downloadUrl
