@@ -48,9 +48,15 @@ export async function getLatestVersionsJson(): Promise<LatestVersions> {
       const response = await fetch(versionsJson.browser_download_url)
       if (!response.ok) throw new Error('Failed to download versions.json.')
 
-      return response.json()
+      const json = await response.json() // Fix: Await the response.json() call
+      return json
     })()
   }
 
   return latestVersionsPromise
+}
+
+// only for testing: reset cache
+export function __resetLatestVersionsJsonCacheForTests() {
+  latestVersionsPromise = null
 }

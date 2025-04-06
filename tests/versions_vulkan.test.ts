@@ -59,30 +59,76 @@ describe('versions_vulkan', () => {
   })
 
   describe('getLatestVersionForPlatform', () => {
+    const mockLatestVersions = {
+      linux: '1.4.304.0',
+      mac: '1.4.304.0',
+      warm: '1.4.304.0',
+      windows: '1.4.304.0'
+    }
+
     it('should return the latest version for Windows', () => {
-      const mockLatestVersions = {
-        linux: '1.4.304.0',
-        mac: '1.4.304.0',
-        warm: '1.4.304.0',
-        windows: '1.4.304.0'
-      }
-      Object.defineProperty(platform, 'IS_WINDOWS', { get: () => true })
+      Object.defineProperty(platform, 'IS_WINDOWS', { value: true }) // Mock IS_WINDOWS to true
+      Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: false }) // Mock IS_WINDOWS_ARM to false
+      Object.defineProperty(platform, 'IS_LINUX', { value: false }) // Mock IS_LINUX to false
+      Object.defineProperty(platform, 'IS_MAC', { value: false }) // Mock IS_MAC to false
 
       const result = getLatestVersionForPlatform(mockLatestVersions)
-      expect(result).toBe('1.4.304.0')
+      expect(result).toBe('1.4.304.0') // Should return the windows version
+    })
+
+    it('should return the latest version for Windows ARM', () => {
+      Object.defineProperty(platform, 'IS_WINDOWS', { value: false }) // Mock IS_WINDOWS to false
+      Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: true }) // Mock IS_WINDOWS_ARM to true
+      Object.defineProperty(platform, 'IS_LINUX', { value: false }) // Mock IS_LINUX to false
+      Object.defineProperty(platform, 'IS_MAC', { value: false }) // Mock IS_MAC to false
+
+      const result = getLatestVersionForPlatform(mockLatestVersions)
+      expect(result).toBe('1.4.304.0') // Should return the warm (Windows ARM) version
     })
 
     it('should return the latest version for Linux', () => {
-      const mockLatestVersions = {
-        linux: '1.4.304.0',
-        mac: '1.4.304.0',
-        warm: '1.4.304.0',
-        windows: '1.4.304.0'
-      }
-      Object.defineProperty(platform, 'IS_LINUX', { get: () => true })
+      Object.defineProperty(platform, 'IS_WINDOWS', { value: false }) // Mock IS_WINDOWS to false
+      Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: false }) // Mock IS_WINDOWS_ARM to false
+      Object.defineProperty(platform, 'IS_LINUX', { value: true }) // Mock IS_LINUX to true
+      Object.defineProperty(platform, 'IS_LINUX_ARM', { value: false }) // Mock IS_LINUX_ARM to false
+      Object.defineProperty(platform, 'IS_MAC', { value: false }) // Mock IS_MAC to false
 
       const result = getLatestVersionForPlatform(mockLatestVersions)
-      expect(result).toBe('1.4.304.0')
+      expect(result).toBe('1.4.304.0') // Should return the linux version
+    })
+
+    it('should return the latest version for Linux ARM', () => {
+      Object.defineProperty(platform, 'IS_WINDOWS', { value: false }) // Mock IS_WINDOWS to false
+      Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: false }) // Mock IS_WINDOWS_ARM to false
+      Object.defineProperty(platform, 'IS_LINUX', { value: false }) // Mock IS_LINUX to false
+      Object.defineProperty(platform, 'IS_LINUX_ARM', { value: true }) // Mock IS_LINUX_ARM to true
+      Object.defineProperty(platform, 'IS_MAC', { value: false }) // Mock IS_MAC to false
+
+      const result = getLatestVersionForPlatform(mockLatestVersions)
+      expect(result).toBe('1.4.304.0') // Should return the linux version, same as IS_LINUX
+    })
+
+    it('should return the latest version for macOS', () => {
+      Object.defineProperty(platform, 'IS_WINDOWS', { value: false }) // Mock IS_WINDOWS to false
+      Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: false }) // Mock IS_WINDOWS_ARM to false
+      Object.defineProperty(platform, 'IS_LINUX', { value: false }) // Mock IS_LINUX to false
+      Object.defineProperty(platform, 'IS_LINUX_ARM', { value: false }) // Mock IS_LINUX_ARM to false
+      Object.defineProperty(platform, 'IS_MAC', { value: true }) // Mock IS_MAC to true
+
+      const result = getLatestVersionForPlatform(mockLatestVersions)
+      expect(result).toBe('1.4.304.0') // Should return the mac version
+    })
+
+    it('should return an empty string for unknown platform', () => {
+      // All platform flags are false, so it should return an empty string
+      Object.defineProperty(platform, 'IS_WINDOWS', { value: false })
+      Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: false })
+      Object.defineProperty(platform, 'IS_LINUX', { value: false })
+      Object.defineProperty(platform, 'IS_LINUX_ARM', { value: false })
+      Object.defineProperty(platform, 'IS_MAC', { value: false })
+
+      const result = getLatestVersionForPlatform(mockLatestVersions)
+      expect(result).toBe('') // Should return empty string
     })
   })
 
@@ -94,7 +140,7 @@ describe('versions_vulkan', () => {
         warm: '1.4.304.0',
         windows: '1.4.304.0'
       }
-      Object.defineProperty(platform, 'IS_LINUX', { get: () => true })
+      Object.defineProperty(platform, 'IS_LINUX', { value: true })
       ;(http.client.getJson as jest.Mock).mockResolvedValue({ result: mockLatestVersions })
 
       const result = await resolveVersion('latest')
@@ -135,6 +181,14 @@ describe('versions_vulkan', () => {
 
     it('should throw an error if versions list is empty', async () => {
       await expect(getLowerVersion('1.4.304.0', [])).rejects.toThrow('versions list is empty')
+    })
+
+    it('should return the given version if it is not found in the sorted versions list', async () => {
+      const mockVersions = ['1.4.304.0', '1.3.296.0', '1.3.290.0']
+      jest.spyOn(versions, 'compare').mockImplementation((a, b) => a.localeCompare(b))
+
+      const result = await getLowerVersion('1.2.0.0', mockVersions) // version not in list
+      expect(result).toBe('1.2.0.0') // Should return the version itself, as it's not in the list
     })
   })
 })
