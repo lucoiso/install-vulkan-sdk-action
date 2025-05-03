@@ -77,8 +77,9 @@ jobs:
 
     steps:
 
+      # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs#runner-context
       - name: Runner OS
-        run: echo "We are running on ${RUNNER_OS}"
+        run: echo "We are running on ${runner.os} with arch ${runner.arch}."
 
       - name: 🤘 Checkout Code
         uses: actions/checkout@v4 # https://github.com/actions/checkout
