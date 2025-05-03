@@ -26,7 +26,8 @@ export const IS_LINUX_ARM: boolean = IS_LINUX && OS_ARCH === 'arm64'
  * @return {*}  {string} The plaform name (windows, mac, linux).
  */
 export function getPlatform(): string {
-  if (IS_WINDOWS_ARM) { // this needs to be before IS_WINDOWS
+  if (IS_WINDOWS_ARM) {
+    // this needs to be before IS_WINDOWS
     return 'warm'
   } else if (IS_WINDOWS) {
     return 'windows'
