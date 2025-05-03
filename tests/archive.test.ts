@@ -52,6 +52,17 @@ describe('extract function', () => {
     expect(result).toBe('/destination')
   })
 
+  it('calls extractTar for .tar.gz files on Linux ARM', async () => {
+    Object.defineProperty(platform, 'IS_WINDOWS', { value: false })
+    Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: false })
+    Object.defineProperty(platform, 'IS_LINUX', { value: false })
+    Object.defineProperty(platform, 'IS_LINUX_ARM', { value: true })
+    ;(tc.extractTar as jest.Mock).mockResolvedValue('/destination')
+    const result = await extract('test.tar.gz', '/destination')
+    expect(tc.extractTar).toHaveBeenCalledWith('test.tar.gz', '/destination')
+    expect(result).toBe('/destination')
+  })
+
   it('calls extractTar with flags for .tar.xz files on Linux', async () => {
     Object.defineProperty(platform, 'IS_LINUX', { value: true })
     jest.spyOn(tc, 'extractTar').mockResolvedValue('/destination')
@@ -79,11 +90,14 @@ describe('extract function', () => {
     await expect(extract('test.unknown', '/destination')).rejects.toThrow('The file type is unsupported: test.unknown')
   })
   it('throws an error for unsupported file types on Linux', async () => {
+    Object.defineProperty(platform, 'IS_WINDOWS', { value: false })
     Object.defineProperty(platform, 'IS_LINUX', { value: true })
+    Object.defineProperty(platform, 'IS_MAC', { value: false })
     await expect(extract('test.unknown', '/destination')).rejects.toThrow('The file type is unsupported: test.unknown')
   })
 
   it('throws an error for unsupported file types on macOS', async () => {
+    Object.defineProperty(platform, 'IS_WINDOWS', { value: false })
     Object.defineProperty(platform, 'IS_MAC', { value: true })
     await expect(extract('test.unknown', '/destination')).rejects.toThrow('The file type is unsupported: test.unknown')
   })

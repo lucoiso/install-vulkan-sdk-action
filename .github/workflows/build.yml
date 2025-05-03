@@ -73,6 +73,7 @@ jobs:
           - { OS: ubuntu-24.04-arm }
           - { OS: macos-15     }
           #- { OS: macos-15-arm }
+          - { OS: windows-11-arm }
 
     steps:
 

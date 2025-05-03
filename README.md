@@ -51,10 +51,7 @@ jobs:
           - { name: "MacOS",         os: macos-latest }
           - { name: "Ubuntu 22 Arm", os: ubuntu-22.04-arm }
           - { name: "Ubuntu 24 Arm", os: ubuntu-24.04-arm }
-          # The installer supports the target platform,
-          # but Github Actions doesn't provide the runner, yet.
-          # It's expected in Q2 2025.
-          # - { name: "Windows 2025 Arm", os: windows-2025-arm }
+          - { name: "Windows Arm",   os: windows-11-arm }
 
     steps:
       - name: Install Vulkan SDK

@@ -24,7 +24,7 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
 
   // Windows:
   // Latest Version: https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe
-  // Versionized:    https://sdk.lunarg.com/sdk/download/1.3.216.0/windows/VulkanSDK-1.3.216.0-Installer.exe
+  // Versionized:    https://sdk.lunarg.com/sdk/download/1.3.250.1/windows/VulkanSDK-1.3.250.1-Installer.exe
   //
   // Warm (Windows ARM64):
   // Latest Version: https://sdk.lunarg.com/sdk/download/latest/warm/vulkan_sdk.exe
@@ -78,7 +78,7 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
  *
  * Windows:
  * Latest Version:  https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime-components.zip
- * Versionized:     https://sdk.lunarg.com/sdk/download/1.3.216.0/windows/VulkanRT-1.3.216.0-Components.zip
+ * Versionized:     https://sdk.lunarg.com/sdk/download/1.3.250.1/windows/VulkanRT-1.3.250.1-Components.zip
  *
  * Warm (Windows ARM64):
  * Latest Version:  https://sdk.lunarg.com/sdk/download/latest/warm/vulkan-runtime-components.zip
@@ -100,7 +100,15 @@ export async function getUrlVulkanRuntime(version: string): Promise<string> {
     }
 
     for (let attempt = 1; attempt <= 3; attempt++) {
-      const vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/vulkan-runtime-components.zip`
+      let vulkanRuntimeUrl = ''
+      if (platformName === 'windows') {
+        // https://sdk.lunarg.com/sdk/download/1.3.250.1/windows/VulkanRT-1.3.250.1-Components.zip
+        vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/VulkanRT-${currentVersion}-Components.zip`
+      }
+      if (platformName === 'warm') {
+        // https://sdk.lunarg.com/sdk/download/1.4.309.0/warm/VulkanRT-ARM64-1.4.309.0-Components.zip
+        vulkanRuntimeUrl = `https://sdk.lunarg.com/sdk/download/${currentVersion}/${platformName}/VulkanRT-ARM64-${currentVersion}-Components.zip`
+      }
       try {
         // isDownloadable throws, if the download is not available
         await http.isDownloadable('VULKAN_RUNTIME', currentVersion, vulkanRuntimeUrl)
@@ -175,6 +183,7 @@ export function getVulkanSdkFilename(version: string): string {
   if (platform.IS_LINUX || platform.IS_LINUX_ARM) {
     // For versions up to 1.3.250.1 the ending is ".tar.gz".
     // For versions after 1.3.250.1 the ending is ".tar.xz".
+    console.log(version, versions.compare(version, '1.3.250.1'))
     if (1 === versions.compare(version, '1.3.250.1')) {
       return `vulkansdk-linux-x86_64.tar.xz`
     }
