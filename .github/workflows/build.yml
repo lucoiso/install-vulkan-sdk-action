@@ -77,6 +77,9 @@ jobs:
 
     steps:
 
+      - name: Runner OS
+        run: echo "We are running on ${RUNNER_OS}"
+
       - name: 🤘 Checkout Code
         uses: actions/checkout@v4 # https://github.com/actions/checkout
 
