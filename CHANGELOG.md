@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - fixed MAC Installer filename
 - fixed ubuntu-24.04-arm release not found
+- fix path for Vulkan Runtime detection on Windows
 
 ## [1.2.2] - 2025-05-06
 

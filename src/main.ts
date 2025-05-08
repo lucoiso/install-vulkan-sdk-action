@@ -175,7 +175,7 @@ export async function run(): Promise<void> {
 
     if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && inputs.installRuntime) {
       const runtimePath = `${installPath}\\runtime`
-      if (installerVulkan.verifyInstallationOfRuntime(installPath)) {
+      if (installerVulkan.verifyInstallationOfRuntime(installPath, version)) {
         core.info(`✔️ [INFO] Path to Vulkan Runtime: ${runtimePath}`)
       } else {
         core.warning(`Could not find Vulkan Runtime in ${runtimePath}`)

@@ -441,12 +441,18 @@ export function runVulkanInfo(vulkanInfoPath: string): void {
  *
  * @export
  * @param {string} sdk_install_path - The installation path of the Vulkan SDK, e.g. "C:\VulkanSDK\1.3.250.1".
+ * @param {string} version - The version of the Vulkan SDK.
  * @return {*}  {boolean}
  */
-export function verifyInstallationOfRuntime(sdkInstallPath: string): boolean {
+export function verifyInstallationOfRuntime(sdkInstallPath: string, version: string): boolean {
   let r = false
   if (platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) {
-    const file = `${sdkInstallPath}/runtime/x64/vulkan-1.dll`
+    let file = ''
+    if (version <= '1.4.309.0') {
+      file = `${sdkInstallPath}/runtime/x64/vulkan-1.dll`
+    } else if (version > '1.4.309.0') {
+      file = `${sdkInstallPath}/runtime/vulkan-1.dll`
+    }
     r = fs.existsSync(file)
   }
   return r
