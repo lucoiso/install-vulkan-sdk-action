@@ -67,33 +67,45 @@ describe('downloader', () => {
   describe('getUrlVulkanSdk', () => {
     it('should return the correct URL for Windows', async () => {
       ;(platform.getPlatform as jest.Mock).mockReturnValue('windows')
+      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
       Object.defineProperty(platform, 'IS_WINDOWS', { value: true, configurable: true })
+
       const version = '1.3.250.1'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/windows/VulkanSDK-${version}-Installer.exe`
-      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
-
       const url = await getUrlVulkanSdk(version)
       expect(url).toBe(expectedUrl)
+
+      const version2 = '1.4.313.0'
+      const expectedUrl2 = `https://sdk.lunarg.com/sdk/download/${version2}/windows/vulkansdk-windows-X64-${version2}.exe`
+      const url2 = await getUrlVulkanSdk(version2)
+      expect(url2).toBe(expectedUrl2)
     })
 
     it('should return the correct URL for Windows ARM', async () => {
       ;(platform.getPlatform as jest.Mock).mockReturnValue('windows')
+      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
       Object.defineProperty(platform, 'IS_WINDOWS_ARM', { value: true, configurable: true })
+
       const version = '1.3.290.0' // 1.3.290.0 23-07-2024 is first release for Windows ARM
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/windows/InstallVulkanARM64-${version}.exe`
-      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
-
       const url = await getUrlVulkanSdk(version)
       expect(url).toBe(expectedUrl)
+
+      const version2 = '1.4.313.0' // 1.4.313.0 06-05-2025 filename changed
+      const expectedUrl2 = `https://sdk.lunarg.com/sdk/download/${version2}/windows/vulkansdk-windows-ARM64-${version2}.exe`
+      const url2 = await getUrlVulkanSdk(version2)
+      expect(url2).toBe(expectedUrl2)
     })
 
     it('should return the correct URL for Linux', async () => {
       ;(platform.getPlatform as jest.Mock).mockReturnValue('linux')
+      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
+
       Object.defineProperty(platform, 'IS_WINDOWS', { value: false, configurable: true })
       Object.defineProperty(platform, 'IS_LINUX', { value: true, configurable: true })
+
       const version = '1.3.250.1'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/linux/vulkansdk-linux-x86_64-${version}.tar.gz`
-      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
 
       const url = await getUrlVulkanSdk(version)
       expect(url).toBe(expectedUrl)
@@ -101,11 +113,13 @@ describe('downloader', () => {
 
     it('should return the correct URL for Mac', async () => {
       ;(platform.getPlatform as jest.Mock).mockReturnValue('mac')
+      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
+
       Object.defineProperty(platform, 'IS_WINDOWS', { value: false, configurable: true })
       Object.defineProperty(platform, 'IS_MAC', { value: true, configurable: true })
+
       const version = '1.3.290.0'
       const expectedUrl = `https://sdk.lunarg.com/sdk/download/${version}/mac/vulkansdk-macos-${version}.dmg`
-      ;(http.isDownloadable as jest.Mock).mockResolvedValue(true)
 
       const url = await getUrlVulkanSdk(version)
       expect(url).toBe(expectedUrl)

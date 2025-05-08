@@ -23,12 +23,14 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
   const platformName = platform.getPlatform() // For download urls see https://vulkan.lunarg.com/sdk/home
 
   // Windows:
-  // Latest Version: https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe
-  // Versionized:    https://sdk.lunarg.com/sdk/download/1.3.250.1/windows/VulkanSDK-1.3.250.1-Installer.exe
+  // Latest Version:  https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-sdk.exe
+  // Versionized:     https://sdk.lunarg.com/sdk/download/1.3.250.1/windows/VulkanSDK-1.3.250.1-Installer.exe
+  // Since 1.4.313.0: https://sdk.lunarg.com/sdk/download/1.4.313.0/windows/vulkansdk-windows-X64-1.4.313.0.exe
   //
   // Warm (Windows ARM64):
-  // Latest Version: https://sdk.lunarg.com/sdk/download/latest/warm/vulkan_sdk.exe
-  // Versionized:    https://sdk.lunarg.com/sdk/download/1.4.304.0/warm/InstallVulkanARM64-1.4.304.0.exe
+  // Latest Version:  https://sdk.lunarg.com/sdk/download/latest/warm/vulkan_sdk.exe
+  // Versionized:     https://sdk.lunarg.com/sdk/download/1.4.304.0/warm/InstallVulkanARM64-1.4.304.0.exe
+  // Sicne 1.4.313.0: https://sdk.lunarg.com/sdk/download/1.4.313.0/warm/vulkansdk-windows-ARM64-1.4.313.0.exe
 
   const downloadBaseUrl = `https://sdk.lunarg.com/sdk/download/${version}/${platformName}`
 
@@ -37,11 +39,21 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
   // note: condition order matters, e.g. IS_WINDOWS_ARM before IS_WINDOWS
 
   if (platform.IS_WINDOWS_ARM) {
-    // well, installer naming scheme is off, compared to the other platforms
-    // at least a minus is missing here... InstallVulkan-ARM64
-    vulkanSdkUrl = `${downloadBaseUrl}/InstallVulkanARM64-${version}.exe`
+    // For versions up to 1.4.309.0 the filename is "InstallVulkanARM64-${version}.exe".
+    // For versions after 1.4.309.0 the filename is "vulkansdk-windows-ARM64-${version}.exe".
+    if (1 === versions.compare(version, '1.4.309.0')) {
+      vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-windows-ARM64-${version}.exe`
+    } else {
+      vulkanSdkUrl = `${downloadBaseUrl}/InstallVulkanARM64-${version}.exe`
+    }
   } else if (platform.IS_WINDOWS) {
-    vulkanSdkUrl = `${downloadBaseUrl}/VulkanSDK-${version}-Installer.exe`
+    // For versions up to 1.4.309.0 the filename is "InstallVulkan-${version}.exe".
+    // For versions after 1.4.309.0 the filename is "vulkansdk-windows-X64-${version}.exe".
+    if (1 === versions.compare(version, '1.4.309.0')) {
+      vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-windows-X64-${version}.exe`
+    } else {
+      vulkanSdkUrl = `${downloadBaseUrl}/VulkanSDK-${version}-Installer.exe`
+    }
   } else if (platform.IS_LINUX_ARM) {
     let distributionVersion = '24.04' // default to 24.04
     if (platform.getLinuxDistributionVersionId() === '22.04') {
@@ -178,6 +190,9 @@ export async function downloadVulkanRuntime(version: string): Promise<string> {
  */
 export function getVulkanSdkFilename(version: string): string {
   if (platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) {
+    // The download name is "VulkanSDK-Installer.exe" for both
+    // "vulkansdk-windows-X64-${version}.exe" and
+    // "vulkansdk-windows-ARM64-${version}.exe".
     return `VulkanSDK-Installer.exe`
   }
   if (platform.IS_LINUX || platform.IS_LINUX_ARM) {
