@@ -211,16 +211,19 @@ export async function installVulkanSdkMacZip(
  * The app name changed from an unversionised to versionised.
  * - up to version 1.4.304.0: "/InstallVulkan.app/Contents/MacOS/InstallVulkan"
  * - since version 1.4.304.1: "/InstallVulkan-${version}.app/Contents/MacOS/InstallVulkan-${version}"
+ * - since version 1.4.313.0: "/vulkansdk-macOS-${version}.app/Contents/MacOS/vulkansdk-macOS-${version}"
  *
  * @param {string} version - The version of the Vulkan SDK.
  * @return {*}  {string} - The installer name.
  */
 function getInstallerNameMac(version: string): string {
-  let installer: string
+  let installer = ''
   if (version <= '1.4.304.0') {
     installer = `InstallVulkan.app/Contents/MacOS/InstallVulkan`
-  } else {
+  } else if (version >= '1.4.304.1' && version < '1.4.313.0') {
     installer = `InstallVulkan-${version}.app/Contents/MacOS/InstallVulkan-${version}`
+  } else if (version >= '1.4.313.0') {
+    installer = `vulkansdk-macOS-${version}.app/Contents/MacOS/vulkansdk-macOS-${version}`
   }
   return installer
 }

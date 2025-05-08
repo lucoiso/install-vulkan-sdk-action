@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
+## [1.2.3] - 2025-05-06
+
+### Fixed
+
+- fixed MAC Installer filename
+- fixed ubuntu-24.04-arm release not found
+
 ## [1.2.2] - 2025-05-06
 
 ### Fixed
@@ -122,8 +129,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Section for Reference Links -->
 
-[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.2...HEAD
-[1.2.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.1...v1.2.2
+[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.3...HEAD
+[1.2.3]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.2...v1.2.3
+[1.2.2]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.1.0...v1.1.1
