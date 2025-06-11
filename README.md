@@ -91,6 +91,12 @@ The following inputs can be used as `steps.with` keys:
 | `install_lavapipe`       | bool    | Windows only. Installs Mesa's Lavapipe software rasterizer. Default: false. | false
 | `lavapipe_destination`   | String  | The installation folder for Lavapipe.    | Windows: `C:\lavapipe`. Linux/MacOS: `%HOME/lavapipe` | false
 
+Additional notes:
+
+ - `install_runtime`: The standalone Vulkan Runtime installer was only available for Windows (x64 and ARM64).
+    It is now deprecated and no longer available for download. The last available version is 1.4.313.0.
+    From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
+
 ### Outputs
 
 The following output variables are available:

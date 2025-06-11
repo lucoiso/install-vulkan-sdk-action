@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
+## [1.2.4] - 20025-11-06
+
+### Fixed
+
+- added version detection to the installation of Vulkan Runtime on Windows (x64, arm64)
+  as the standalone installer is deprecated. last version 1.4.313.0., [#500](https://github.com/jakoch/install-vulkan-sdk-action/issues/500)
+
+### Changed
+
+- updated SDK installer component list to include the cross compile lib components:
+  `com.lunarg.vulkan.arm64` and `com.lunarg.vulkan.x64`, [#499](https://github.com/jakoch/install-vulkan-sdk-action/pull/499)
+
 ## [1.2.3] - 2025-05-06
 
 ### Fixed
@@ -130,7 +142,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Section for Reference Links -->
 
-[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.3...HEAD
+[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.4...HEAD
+[1.2.3]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.0...v1.2.1
