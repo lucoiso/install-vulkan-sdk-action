@@ -511,17 +511,15 @@ export function runVulkanInfo(vulkanInfoPath: string): void {
  * @return {*}  {boolean}
  */
 export function verifyInstallationOfRuntime(sdkRuntimePath: string, version: string): boolean {
-  let r = false
-  if (platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) {
-    let file = ''
-    if (version <= '1.4.309.0') {
-      file = path.normalize(`${sdkRuntimePath}/x64/vulkan-1.dll`)
-    } else if (version > '1.4.309.0') {
-      file = path.normalize(`${sdkRuntimePath}/vulkan-1.dll`)
+  if (!(platform.IS_WINDOWS || platform.IS_WINDOWS_ARM)) return false
+  const basePath = path.normalize(`${sdkRuntimePath}/x64`)
+  const requiredFiles = ['vulkan-1.dll', 'vulkaninfo.exe']
+  for (const file of requiredFiles) {
+    if (!fs.existsSync(path.join(basePath, file))) {
+      return false
     }
-    r = fs.existsSync(file)
   }
-  return r
+  return true
 }
 
 /**
