@@ -11,7 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - "It was a bright day in April, and the clocks were striking thirteen." - 1984
 
-## [1.2.4] - 20025-11-06
+## [1.2.5] - 2025-12-06
+
+### Fixed
+
+- fixes for "Vulkan Runtime for Windows" installation and "deprecation of the standalone RT installer" (#500)
+  The Vulkan runtime is installed into system folders by the Vulkan SDK installer.
+  We copy these files back into the "VulkanSDK/version/runtime/{x86|x64}" folder.
+  This is the installation we used with the standalone RT installer.
+  This is done to ensure backwards compatibility with CI steps, which copy files from this location.
+- fixed verifyInstallationOfRuntime() to detect the runtime files correctly
+
+## [1.2.4] - 2025-11-06
 
 ### Fixed
 
@@ -142,8 +153,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- Section for Reference Links -->
 
-[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.4...HEAD
-[1.2.3]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.3...v1.2.4
+[vNext]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.5...HEAD
+[1.2.5]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.4...v1.2.5
+[1.2.4]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/jakoch/install-vulkan-sdk-action/compare/v1.2.0...v1.2.1
