@@ -93,7 +93,7 @@ async function getVulkanSdk(
       const vulkanRuntimePath = await downloader.downloadVulkanRuntime(version)
       await installerVulkan.installVulkanRuntime(vulkanRuntimePath, destination, version)
     }
-    // Install the Vulkan Runtime as part of the SDK installer
+    // The Vulkan Runtime is installed a part of the SDK installer, but we reposition it to the runtime folder.
     // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
     if (version >= '1.4.313.1') {
       await installerVulkan.installVulkanRuntimeFromSdk(installPath, version)
@@ -184,13 +184,9 @@ export async function run(): Promise<void> {
       core.warning(`Could not find Vulkan SDK in ${installPath}`)
     }
 
-    // NOTE: The standalone Vulkan Runtime installer was only available for Windows (x64 and ARM64).
-    // It is now deprecated and no longer available for download. The last available version is 1.4.313.0.
-    // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
-    // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
-    if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && inputs.installRuntime /*&& version <= '1.4.313.0'*/) {
-      const runtimePath = `${installPath}\\runtime`
-      if (installerVulkan.verifyInstallationOfRuntime(installPath, version)) {
+    if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && inputs.installRuntime) {
+      const runtimePath = path.normalize(`${installPath}/runtime`)
+      if (installerVulkan.verifyInstallationOfRuntime(runtimePath, version)) {
         core.info(`✔️ [INFO] Path to Vulkan Runtime: ${runtimePath}`)
       } else {
         core.warning(`Could not find Vulkan Runtime in ${runtimePath}`)
