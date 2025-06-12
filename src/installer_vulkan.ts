@@ -324,6 +324,74 @@ export async function installVulkanRuntime(runtimePath: string, destination: str
 }
 
 /**
+ * Install the Vulkan Runtime using the SDK installer.
+ * The runtime has been bundled with the SDK since version 1.4.313.1.
+ *
+ * This is a two-step process:
+ * 1. Run "VulkanSDK\helper\VulkanRT.exe" to install the Vulkan Runtime.
+ *    This is done by running the SDK installer ?
+ *    This will install the following files:
+ *    1. log and license into C:\Program Files\VulkanRT
+ *    2. x86 components into
+ *      - C:\WINDOWS\system32\vulkan-1.dll
+ *      - C:\WINDOWS\system32\vulkan-1-999-0-0-0.dll
+ *      - C:\WINDOWS\system32\vulkaninfo.exe
+ *      - C:\WINDOWS\system32\vulkaninfo-1-999-0-0-0.exe ???
+ *    3. x64 components into
+ *      - C:\WINDOWS\SysWOW64\vulkan-1.dll
+ *      - C:\WINDOWS\SysWOW64\vulkan-1-999-0-0-0.dll
+ *      - C:\WINDOWS\SysWOW64\vulkaninfo.exe
+ *      - C:\WINDOWS\SysWOW64\vulkaninfo-1-999-0-0-0.exe ???
+ * 2. Copy the installed runtime files back into the SDK installation directory.
+ *
+ * The goal is to place the runtime in the "runtime" folder under the SDK path, resulting in:
+ *   - C:\VulkanSDK\1.2.3.4\runtime\x64\vulkan-1.dll
+ *   - C:\VulkanSDK\1.2.3.4\runtime\x64\vulkaninfo.exe
+ *
+ * @export
+ * @param {string} destination
+ * @param {string} version
+ * @return {*}  {string} - The installation path of the Vulkan Runtime.
+ */
+export function installVulkanRuntimeFromSdk(destination: string, version: string): string {
+  core.info(`📦 Installing Vulkan Runtime from SDK...`)
+  // run the VulkanRT.exe installer
+  // we dont need to.. because its part of the SDK installation ?
+  // also there is no silent install option for the VulkanRT.exe installer...
+  /*const vulkanRtInstallerPath = path.normalize(`${destination}/${version}/helper/VulkanRT.exe`)*/
+
+  // origin
+  const x86RtSystemPath = path.normalize(`C:/WINDOWS/system32/`) // C:\WINDOWS\system32
+  const x64RtSystemPath = path.normalize(`C:/WINDOWS/SysWOW64/`) // C:\WINDOWS\SysWOW64
+  // target
+  const installPath = path.normalize(`${destination}/${version}/runtime`) // C:\VulkanSDK\1.3.250.1\runtime
+  const x86RtInstallPath = path.join(installPath, 'x86') // C:\VulkanSDK\1.3.250.1\runtime\x86
+  const x64RtInstallPath = path.join(installPath, 'x64') // C:\VulkanSDK\1.3.250.1\runtime\x64
+
+  // copy the installed runtime files back into the SDK installation directory
+  if (fs.existsSync(`${x86RtSystemPath}vulkan-1.dll`)) {
+    core.info(`   Copying x86 runtime files to SDK path...`)
+    fs.copyFileSync(`${x86RtSystemPath}vulkan-1.dll`, path.normalize(`${x86RtInstallPath}/vulkan-1.dll`))
+    fs.copyFileSync(`${x86RtSystemPath}vulkaninfo.exe`, path.normalize(`${x86RtInstallPath}/vulkaninfo.exe`))
+    // fs.copyFileSync(`${x86RtSystemPath}vulkan-1-999-0-0-0.dll`, path.normalize(`${x86RtInstallPath}/vulkan-1-999-0-0-0.dll`))
+    // fs.copyFileSync(`${x86RtSystemPath}vulkaninfo-1-999-0-0-0.exe`, path.normalize(`${x86RtInstallPath}/vulkaninfo-1-999-0-0-0.exe`))
+  } else {
+    core.warning(`   No x86 runtime files found in ${x86RtSystemPath}. Skipping copy.`)
+  }
+  if (fs.existsSync(`${x64RtSystemPath}vulkan-1.dll`)) {
+    core.info(`   Copying x64 runtime files to SDK path...`)
+    fs.copyFileSync(`${x64RtSystemPath}vulkan-1.dll`, path.normalize(`${x64RtInstallPath}/vulkan-1.dll`))
+    fs.copyFileSync(`${x64RtSystemPath}vulkaninfo.exe`, path.normalize(`${x64RtInstallPath}/vulkaninfo.exe`))
+    // fs.copyFileSync(`${x64RtSystemPath}vulkan-1-999-0-0-0.dll`, path.normalize(`${x64RtInstallPath}/vulkan-1-999-0-0-0.dll`))
+    // fs.copyFileSync(`${x64RtSystemPath}vulkaninfo-1-999-0-0-0.exe`, path.normalize(`${x64RtInstallPath}/vulkaninfo-1-999-0-0-0.exe`))
+  } else {
+    core.warning(`   No x64 runtime files found in ${x64RtSystemPath}. Skipping copy.`)
+  }
+  core.info(`   Installed into folder: ${installPath}`)
+  return installPath
+}
+
+/**
  * Get the path to the "vulkaninfo" executable.
  * The path is platform dependent.
  *

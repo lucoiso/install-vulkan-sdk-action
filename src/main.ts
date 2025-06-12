@@ -83,13 +83,21 @@ async function getVulkanSdk(
   const vulkanSdkPath = await downloader.downloadVulkanSdk(version)
   installPath = await installerVulkan.installVulkanSdk(vulkanSdkPath, destination, version, optionalComponents)
 
-  // NOTE: The standalone Vulkan Runtime installer was only available for Windows (x64 and ARM64).
-  // It is now deprecated and no longer available for download. The last available version is 1.4.313.0.
-  // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
   // Download and install Runtime after the SDK. This allows caching both.
-  if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && installRuntime && version <= '1.4.313.0') {
-    const vulkanRuntimePath = await downloader.downloadVulkanRuntime(version)
-    await installerVulkan.installVulkanRuntime(vulkanRuntimePath, destination, version)
+  if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && installRuntime) {
+    // Downloading and install the standalone Vulkan Runtime
+    // The standalone Vulkan Runtime was only available for Windows (x64 and ARM64).
+    // The last available version is 1.4.313.0.
+    // It is now deprecated and no longer available for download.
+    if (version <= '1.4.313.0') {
+      const vulkanRuntimePath = await downloader.downloadVulkanRuntime(version)
+      await installerVulkan.installVulkanRuntime(vulkanRuntimePath, destination, version)
+    }
+    // Install the Vulkan Runtime as part of the SDK installer
+    // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
+    if (version >= '1.4.313.1') {
+      await installerVulkan.installVulkanRuntimeFromSdk(installPath, version)
+    }
   }
 
   // cache install folder
@@ -180,7 +188,7 @@ export async function run(): Promise<void> {
     // It is now deprecated and no longer available for download. The last available version is 1.4.313.0.
     // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
     // From version 1.4.313.1 onwards, the runtime is included in the SDK installer.
-    if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && inputs.installRuntime && version <= '1.4.313.0') {
+    if ((platform.IS_WINDOWS || platform.IS_WINDOWS_ARM) && inputs.installRuntime /*&& version <= '1.4.313.0'*/) {
       const runtimePath = `${installPath}\\runtime`
       if (installerVulkan.verifyInstallationOfRuntime(installPath, version)) {
         core.info(`✔️ [INFO] Path to Vulkan Runtime: ${runtimePath}`)
