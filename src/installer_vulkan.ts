@@ -590,7 +590,7 @@ function deleteFilesInFolder(folder: string): void {
   for (const file of fs.readdirSync(folder)) {
     const filePath = path.join(folder, file)
     if (fs.statSync(filePath).isDirectory()) {
-      // biome-ignore lint/correctness/noUnnecessaryContinue: If subdirectory, skip it
+      // biome-ignore lint: If subdirectory, skip it
       continue
     } else {
       // If file, delete it

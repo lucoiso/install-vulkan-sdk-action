@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": []
+    "includes": ["**"]
   },
   "formatter": {
     "enabled": true,
@@ -19,24 +19,32 @@
     "lineWidth": 120,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": [".devcontainer/", ".github/", "build-tools/", "dist/", "lib/", "node_modules/", "coverage/"]
+    "includes": [
+      "**",
+      "!.devcontainer/**",
+      "!.github/**",
+      "!build-tools/**",
+      "!dist/**",
+      "!lib/**",
+      "!node_modules/**",
+      "!coverage/**"
+    ]
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "complexity": {
         "noExtraBooleanCast": "error",
-        "noMultipleSpacesInRegularExpressionLiterals": "error",
         "noUselessCatch": "error",
         "noUselessLabel": "error",
         "noUselessStringConcat": "error",
         "noVoid": "error",
-        "noWith": "error",
-        "useOptionalChain": "off"
+        "useOptionalChain": "off",
+        "noAdjacentSpacesInRegex": "error",
+        "noArguments": "error",
+        "noCommaOperator": "error"
       },
       "correctness": {
         "noConstAssign": "error",
@@ -48,7 +56,6 @@
         "noInvalidBuiltinInstantiation": "error",
         "noInvalidConstructorSuper": "error",
         "noInvalidUseBeforeDeclaration": "off",
-        "noNewSymbol": "error",
         "noNonoctalDecimalEscape": "error",
         "noPrecisionLoss": "error",
         "noSelfAssign": "error",
@@ -64,16 +71,14 @@
         "noUnusedVariables": "error",
         "useIsNan": "error",
         "useValidForDirection": "error",
-        "useYield": "error"
+        "useYield": "error",
+        "useValidTypeof": "error"
       },
       "style": {
-        "noArguments": "error",
-        "noCommaOperator": "error",
         "noNonNullAssertion": "off",
         "noParameterAssign": "off",
         "noUselessElse": "off",
         "noUnusedTemplateLiteral": "off",
-        "noVar": "error",
         "useConsistentArrayType": {
           "level": "error",
           "options": {
@@ -85,7 +90,12 @@
         "useSingleVarDeclarator": "error",
         "useTemplate": "error",
         "useThrowOnlyError": "error",
-        "useNamingConvention": "error"
+        "useNamingConvention": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useNumberNamespace": "error"
       },
       "suspicious": {
         "noAssignInExpressions": "error",
@@ -114,20 +124,22 @@
         "noUnsafeNegation": "error",
         "useAwait": "error",
         "useGetterReturn": "error",
-        "useValidTypeof": "error"
+        "noWith": "error",
+        "noVar": "error"
       }
     },
-    "ignore": [
-      ".devcontainer/",
-      ".git/",
-      ".github/",
-      ".vscode/",
-      "build-tools/",
-      "coverage/",
-      "dist/",
-      "lib/",
-      "node_modules/",
-      "tests/"
+    "includes": [
+      "**",
+      "!**/.devcontainer/",
+      "!**/.git/",
+      "!**/.github/",
+      "!**/.vscode/",
+      "!**/build-tools/",
+      "!**/coverage/",
+      "!**/dist/",
+      "!**/lib/",
+      "!**/node_modules/",
+      "!**/tests/"
     ]
   },
   "javascript": {
@@ -150,7 +162,7 @@
   },
   "overrides": [
     {
-      "include": ["**/*.ts", "**/*.tsx"],
+      "includes": ["**/*.ts", "**/*.tsx"],
       "javascript": {
         "globals": []
       },
@@ -181,7 +193,7 @@
       }
     },
     {
-      "include": ["**/*.spec.{js,ts}", "**/*.test.{js,ts}"],
+      "includes": ["**/*.spec.{js,ts}", "**/*.test.{js,ts}"],
       "javascript": {
         "globals": []
       },

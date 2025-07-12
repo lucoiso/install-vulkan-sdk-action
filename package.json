@@ -25,7 +25,13 @@
     "pre-commit": "npm run all",
     "all": "npm run format:write && npm run build && npm run npm:audit && npm run package && npm test"
   },
-  "keywords": ["actions", "vulkan", "vulkan-sdk", "setup", "install"],
+  "keywords": [
+    "actions",
+    "vulkan",
+    "vulkan-sdk",
+    "setup",
+    "install"
+  ],
   "main": "lib/main.js",
   "dependencies": {
     "@actions/cache": "^4",
@@ -35,8 +41,8 @@
     "@actions/tool-cache": "^2.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@github/local-action": "^3.2.0",
+    "@biomejs/biome": "2.0.6",
+    "@github/local-action": "^2.2.1",
     "@types/jest": "^30",
     "@types/node": "^24.0",
     "@vercel/ncc": "^0.38.0",
