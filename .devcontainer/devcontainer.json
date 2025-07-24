@@ -17,11 +17,11 @@
       "username": "vscode"
     },
     // integrate ZSH plugins: git, auto-suggestions, auto-completions
-    "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {
+    "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
       "plugins": "git zsh-autosuggestions zsh-completions",
       "omzPlugins": "https://github.com/zsh-users/zsh-autosuggestions https://github.com/zsh-users/zsh-completions",
       "username": "vscode"
-    },
+    }
   },
   // Set container specific settings.json values on container create.
   "customizations": {
