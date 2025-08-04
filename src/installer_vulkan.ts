@@ -373,7 +373,12 @@ export function installVulkanRuntimeFromSdk(destination: string, version: string
     core.info(`   Copying x86 runtime files to SDK path (SysWOW64 -> runtime/x86)`)
     createInstallPath('x86')
     fs.copyFileSync(`${x64RtSystemPath}vulkan-1.dll`, path.normalize(`${x86RtInstallPath}/vulkan-1.dll`))
-    fs.copyFileSync(`${x64RtSystemPath}vulkaninfo.exe`, path.normalize(`${x86RtInstallPath}/vulkaninfo.exe`))
+    if (fs.existsSync(`${x64RtSystemPath}vulkaninfo.exe`)) {
+      fs.copyFileSync(`${x64RtSystemPath}vulkaninfo.exe`, path.normalize(`${x86RtInstallPath}/vulkaninfo.exe`))
+    }
+    if (fs.existsSync(`${x64RtSystemPath}vulkaninfosdk.exe`)) {
+      fs.copyFileSync(`${x64RtSystemPath}vulkaninfosdk.exe`, path.normalize(`${x86RtInstallPath}/vulkaninfosdk.exe`))
+    }
   } else {
     core.warning(`   No x86 runtime files found in ${x64RtSystemPath}. Skipping copy.`)
   }
@@ -381,7 +386,12 @@ export function installVulkanRuntimeFromSdk(destination: string, version: string
     core.info(`   Copying x64 runtime files to SDK path (system32 -> runtime/x64)`)
     createInstallPath('x64')
     fs.copyFileSync(`${x86RtSystemPath}vulkan-1.dll`, path.normalize(`${x64RtInstallPath}/vulkan-1.dll`))
-    fs.copyFileSync(`${x86RtSystemPath}vulkaninfo.exe`, path.normalize(`${x64RtInstallPath}/vulkaninfo.exe`))
+    if (fs.existsSync(`${x86RtSystemPath}vulkaninfo.exe`)) {
+      fs.copyFileSync(`${x86RtSystemPath}vulkaninfo.exe`, path.normalize(`${x64RtInstallPath}/vulkaninfo.exe`))
+    }
+    if (fs.existsSync(`${x86RtSystemPath}vulkaninfosdk.exe`)) {
+      fs.copyFileSync(`${x86RtSystemPath}vulkaninfosdk.exe`, path.normalize(`${x64RtInstallPath}/vulkaninfosdk.exe`))
+    }
   } else {
     core.warning(`   No x64 runtime files found in ${x86RtSystemPath}. Skipping copy.`)
   }
