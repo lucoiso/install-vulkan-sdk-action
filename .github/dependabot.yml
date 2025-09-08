@@ -24,5 +24,6 @@ updates:
     commit-message:
       prefix: "deps(gha): "
     labels:
-      - "github-actions"  
+      - "dependencies"  
+
 
