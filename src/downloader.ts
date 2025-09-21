@@ -39,21 +39,9 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
   // note: condition order matters, e.g. IS_WINDOWS_ARM before IS_WINDOWS
 
   if (platform.IS_WINDOWS_ARM) {
-    // For versions up to 1.4.309.0 the filename is "InstallVulkanARM64-${version}.exe".
-    // For versions after 1.4.309.0 the filename is "vulkansdk-windows-ARM64-${version}.exe".
-    if (1 === versions.compare(version, '1.4.309.0')) {
       vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-windows-ARM64-${version}.exe`
-    } else {
-      vulkanSdkUrl = `${downloadBaseUrl}/InstallVulkanARM64-${version}.exe`
-    }
   } else if (platform.IS_WINDOWS) {
-    // For versions up to 1.4.309.0 the filename is "InstallVulkan-${version}.exe".
-    // For versions after 1.4.309.0 the filename is "vulkansdk-windows-X64-${version}.exe".
-    if (1 === versions.compare(version, '1.4.309.0')) {
       vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-windows-X64-${version}.exe`
-    } else {
-      vulkanSdkUrl = `${downloadBaseUrl}/VulkanSDK-${version}-Installer.exe`
-    }
   } else if (platform.IS_LINUX_ARM) {
     let distributionVersion = '24.04' // default to 24.04
     if (platform.getLinuxDistributionVersionId() === '22.04') {
@@ -63,21 +51,9 @@ export async function getUrlVulkanSdk(version: string): Promise<string> {
     const downloadBaseUrl = `https://github.com/jakoch/vulkan-sdk-arm/releases/download/${version}`
     vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-ubuntu-${distributionVersion}-arm-${version}.tar.xz`
   } else if (platform.IS_LINUX) {
-    // For versions up to 1.3.250.1 the ending is ".tar.gz".
-    // For versions after 1.3.250.1 the ending is ".tar.xz".
-    let extension = 'tar.gz'
-    if (1 === versions.compare(version, '1.3.250.1')) {
-      extension = 'tar.xz'
-    }
-    vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-linux-x86_64-${version}.${extension}`
+    vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-linux-x86_64-${version}.tar.xz`
   } else if (platform.IS_MAC) {
-    // For versions up to 1.3.290.0 the ending is ".dmg".
-    // For versios after 1.3.290.0 the ending is ".zip".
-    let extension = 'dmg'
-    if (1 === versions.compare(version, '1.3.290.0')) {
-      extension = 'zip'
-    }
-    vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-macos-${version}.${extension}`
+    vulkanSdkUrl = `${downloadBaseUrl}/vulkansdk-macos-${version}.zip`
   }
 
   await http.isDownloadable('VULKAN_SDK', version, vulkanSdkUrl)
@@ -196,21 +172,10 @@ export function getVulkanSdkFilename(version: string): string {
     return `VulkanSDK-Installer.exe`
   }
   if (platform.IS_LINUX || platform.IS_LINUX_ARM) {
-    // For versions up to 1.3.250.1 the ending is ".tar.gz".
-    // For versions after 1.3.250.1 the ending is ".tar.xz".
-    console.log(version, versions.compare(version, '1.3.250.1'))
-    if (1 === versions.compare(version, '1.3.250.1')) {
       return `vulkansdk-linux-x86_64.tar.xz`
-    }
-    return `vulkansdk-linux-x86_64.tar.gz`
   }
   if (platform.IS_MAC) {
-    // For versions up to 1.3.290.0 the ending is ".dmg".
-    // For versions after 1.3.290.0 the ending is ".zip".
-    if (1 === versions.compare(version, '1.3.290.0')) {
       return `vulkansdk-macos.zip`
-    }
-    return `vulkansdk-macos.dmg`
   }
   return 'not-implemented-for-platform'
 }
